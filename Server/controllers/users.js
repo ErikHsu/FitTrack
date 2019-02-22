@@ -1,5 +1,5 @@
 const express = require('express');
-const conn = require('../models/mysqp_connection');
+const conn = require('../models/mysql_connection');
 
 const app = express.Router();
 

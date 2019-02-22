@@ -1,5 +1,5 @@
 const express = require('express');
-const users = require('/controllers/users');
+const users = require('./controllers/users');
 const app = express();
 const port = 3000;
 
