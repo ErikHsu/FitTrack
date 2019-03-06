@@ -10,8 +10,16 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("./id", (req, res) => {
+    user.getAll((err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
 app.post("/", (req, res) => {
-    user.add({ }, (err, data) => {  //TODO
+    console.log(req.body)
+    user.add(req.body, (err, data) => {  //TODO
         if(err) throw err;
         res.send(data);
     });
