@@ -1,5 +1,5 @@
 const express = require('express');
-const user = require('../models/user');
+const nutrition = require('../models/nutrition');
 
 const app = express.Router();
 
@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("./:id", (req, res) => {
-    user.getAll((err, data) => {
+    nutrition.getAll((err, data) => {
         if(err) throw err;
         res.send(data);
     });
@@ -19,7 +19,7 @@ app.get("./:id", (req, res) => {
 
 app.post("/", (req, res) => {
     console.log(req.body)
-    user.add(req.body, (err, data) => {
+    nutrition.add(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });

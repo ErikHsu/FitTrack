@@ -1,17 +1,17 @@
 const express = require('express');
-const user = require('../models/user');
+const people = require("./models/people");
 
 const app = express.Router();
 
 app.get("/", (req, res) => {
-    user.getAll((err, data) => {
-        if(err) throw err;
+    people.getAll((err, data) => {
+        if(err) throw(err);
         res.send(data);
     });
 });
 
 app.get("./:id", (req, res) => {
-    user.getAll((err, data) => {
+    people.getAll((err, data) => {
         if(err) throw err;
         res.send(data);
     });
@@ -19,7 +19,7 @@ app.get("./:id", (req, res) => {
 
 app.post("/", (req, res) => {
     console.log(req.body)
-    user.add(req.body, (err, data) => {
+    people.add(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });

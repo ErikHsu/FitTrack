@@ -1,17 +1,17 @@
 const conn = require('./mysql_connection');
 
 const model = {
-    getAll(cb){
+    getAll(cb) {
         conn.query("SELECT * FROM Fit_Users", (err, data) => {
             cb(err, data);
         });
     },
-    get(id, cb){
+    get(id, cb) {
         conn.query("SELECT * FROM Fit_Users WHERE id=?", (err, data) => {
             cb(err, data);
         });
     },
-    add(input, cb){
+    add(input, cb) {
         if(input.password.length < 8) {
             cb(Error('Password must be at least 8 characters'))
         }
