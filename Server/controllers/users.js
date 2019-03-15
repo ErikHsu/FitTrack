@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("./:id", (req, res) => {
+app.get("/:id", (req, res) => {
     user.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);

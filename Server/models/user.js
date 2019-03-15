@@ -7,7 +7,7 @@ const model = {
         });
     },
     get(id, cb) {
-        conn.query("SELECT * FROM Fit_Users WHERE id=?", (err, data) => {
+        conn.query("SELECT * FROM Fit_Users WHERE Id=?", id, (err, data) => {
             cb(err, data);
         });
     },
@@ -17,6 +17,7 @@ const model = {
         }
         conn.query("INSERT INTO Fit_Users (userName, password, created_at) VALUES (?)",
         [[input.userName, input.password, new Date()]],
+
         (err, data) => {
             if(err) {
                 cb(err);
