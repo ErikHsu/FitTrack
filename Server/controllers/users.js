@@ -25,4 +25,12 @@ app.post("/", (req, res) => {
     });
 });
 
+app.post("/changePass", (req, res) => {
+    console.log(req.body)
+    user.changePass(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
 module.exports = app;
