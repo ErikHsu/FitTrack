@@ -46,7 +46,20 @@ const model = {
                 cb(err, data);
             });
         });
+    },
+    //Change userName
+    changeName(input, cb) {
+        conn.query("UPDATE Fit_Users SET userName = ? WHERE userName = ?", [input.newUserName, input.userName],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            }
+            model.get(data.insertId, (err, data) => {
+                cb(err, data);
+            });
+        });
     }
-};
+}
 
 module.exports = model;

@@ -33,4 +33,12 @@ app.post("/changePass", (req, res) => {
     });
 });
 
+app.post("/changeName", (req, res) => {
+    console.log(req.body)
+    user.changeName(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
 module.exports = app;
