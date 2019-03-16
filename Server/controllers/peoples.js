@@ -25,4 +25,20 @@ app.post("/", (req, res) => {
     });
 });
 
+app.post("/editName", (req, res) => {
+    console.log(req.body)
+    people.editName(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
+app.post("/editAddr", (req, res) => {
+    console.log(req.body)
+    people.editAddr(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+
 module.exports = app;

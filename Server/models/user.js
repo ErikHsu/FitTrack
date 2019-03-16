@@ -32,7 +32,7 @@ const model = {
         });
     },
     //Change password
-    changePass(input, cb) {
+    editPassword(input, cb) {
         if(input.password.length < 8) {
             cb(Error('Password must be at least 8 characters'))
         }
@@ -48,7 +48,7 @@ const model = {
         });
     },
     //Change userName
-    changeName(input, cb) {
+    editUserName(input, cb) {
         conn.query("UPDATE Fit_Users SET userName = ? WHERE userName = ?", [input.newUserName, input.userName],
         (err, data) => {
             if(err) {
@@ -59,7 +59,7 @@ const model = {
                 cb(err, data);
             });
         });
-    }
+    },
 }
 
 module.exports = model;

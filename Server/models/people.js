@@ -7,7 +7,7 @@ const model = {
         });
     },
     get(id, cb) {
-        conn.query("SELECT * FROM Fit_Peoples WHERE id=?", (err, data) => {
+        conn.query("SELECT * FROM Fit_Peoples WHERE id=?", id, (err, data) => {
             cb(err.data);
         });
     },
@@ -22,6 +22,32 @@ const model = {
             model.get(data.insertPeople, (err, data) => {
                 cb(err, data);
             });  
+        });
+    },
+    //Edit first and last name
+    editName(input, cb) {
+        conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ? WHERE fName = ?, lName = ?", [input.newfName, newlName, fName, lName],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            }
+            model.get(data.insertId, (err, data) => {
+                cb(err, data);
+            });
+        });
+    },
+    //Edit address
+    editAddr(input, cb) {
+        conn.query("UPDATE Fit_Peoples SET addr = ? WHERE userName = ?", [input.addr, input.userName],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            }
+            model.get(data.insertId, (err, data) => {
+                cb(err, data);
+            });
         });
     },
 };

@@ -1,17 +1,17 @@
 const express = require('express');
-const user = require('../models/user');
+const eaten = require("./models/eaten");
 
 const app = express.Router();
 
 app.get("/", (req, res) => {
-    user.getAll((err, data) => {
+    eaten.getAll((err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
 
 app.get("/:id", (req, res) => {
-    user.get(req.params.id, (err, data) => {
+    eaten.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
@@ -19,26 +19,24 @@ app.get("/:id", (req, res) => {
 
 app.post("/", (req, res) => {
     console.log(req.body)
-    user.add(req.body, (err, data) => {
+    eaten.add(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
 
-app.post("/editPassword", (req, res) => {
+app.post("/editFood", (req, res) => {
     console.log(req.body)
-    user.editPassword(req.body, (err, data) => {
+    eaten.editFood(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
 
-app.post("/editUserName", (req, res) => {
+app.post("/editUser", (req, res) => {
     console.log(req.body)
-    user.editUserName(req.body, (err, data) => {
+    eaten.editUser(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
-
-module.exports = app;
