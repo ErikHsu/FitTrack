@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("./:id", (req, res) => {
-    people.getAll((err, data) => {
+    people.get(req.param.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });

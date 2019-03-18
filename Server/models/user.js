@@ -31,12 +31,9 @@ const model = {
             });
         });
     },
-    //Change password
-    editPassword(input, cb) {
-        if(input.password.length < 8) {
-            cb(Error('Password must be at least 8 characters'))
-        }
-        conn.query("UPDATE Fit_Users SET password = ? WHERE userName = ?", [input.password, input.userName],
+    //Get password via userName
+    getPass(input, cb) {
+        conn.query("SELECT password FROM Fit_Users WHERE userName = ?", [[input.userName]],
         (err, data) => {
             if(err) {
                 cb(err);
@@ -45,21 +42,86 @@ const model = {
             model.get(data.insertId, (err, data) => {
                 cb(err, data);
             });
+        });
+    },
+    //Edit User
+    edit(input, cb) {
+        var userName = input.userName;
+        var password = input.password;
+        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            }
+            if(data.length < 0) {
+                cb("User not found");
+            } else {
+                conn.query("UPDATE Fit_Users SET userName = ?, password = ? WHERE userName = ?", [[userName, password, userName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }   
+                });
+            };
+        });
+    },
+    //Change password
+    editPassword(input, cb) {
+        var userName = input.userName;
+        var password = input.password;
+        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            };
+            if(data.length < 0) {
+                cb(Error("User not found"));
+            } else {
+                if(password.length < 8) {
+                    cb(Error("Password must be at least 8 characters"));
+                };
+                conn.query("UPDATE Fit_Users SET password = ? WHERE userName = ?", [[password, userName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    model.get(data.insertId, (err, data) => {
+                        cb(err, data);
+                    });
+                });
+            };
         });
     },
     //Change userName
     editUserName(input, cb) {
-        conn.query("UPDATE Fit_Users SET userName = ? WHERE userName = ?", [input.newUserName, input.userName],
+        var newUserName = input.newUserName;
+        var userName = input.userName;
+        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
         (err, data) => {
             if(err) {
                 cb(err);
                 return;
-            }
-            model.get(data.insertId, (err, data) => {
-                cb(err, data);
-            });
+            };
+            if(data.length < 0) {
+                cb(Error("User not found"));
+            } else {
+                conn.query("UPDATE Fit_Users SET userName = ? WHERE userName = ?", [[newUserName, userName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    model.get(data.insertId, (err, data) => {
+                        cb(err, data);
+                    });
+                });
+            };
         });
     },
-}
+};
 
 module.exports = model;

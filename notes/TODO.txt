@@ -1,0 +1,5 @@
+TODO:
+- Delete functions
+- Check for create_time setup
+- Check if intermediate model/controller needed
+
