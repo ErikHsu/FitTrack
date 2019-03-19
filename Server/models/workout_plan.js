@@ -32,14 +32,14 @@ const model = {
     editPlan(input, cb) {
         var workoutPlan = input.workoutPlan;
         var originalPlan = input.originalPlan;
-        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
+        conn.query("SELECT 1 FROM Fit_Users_Plans WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
         (err, data) => {
             if(err) {
                 cb(err);
                 return;
             };
             if(data.length < 0) {
-                cb(Error("User not found"));
+                cb(Error("Workout not found"));
             } else {
                 conn.query("UPDATE Fit_Workout_Plans SET workoutPlan = ? WHERE workoutPlan = ?", [[workoutPlan, originalPlan]],
                 (err, data) => {

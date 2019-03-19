@@ -41,7 +41,7 @@ const model = {
                 return;
             };
             if(data.length < 0) {
-                cb(Error("User not found"));
+                cb(Error("Body History not found"));
             } else {
                 conn.query("UPDATE Fit_Body_History SET weight = ?, height = ?, gender = ?", [[weight, height, gender]],
                 (err, data) => {

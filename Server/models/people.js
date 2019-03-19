@@ -10,7 +10,7 @@ const model = {
     //Get specific person by id
     get(id, cb) {
         conn.query("SELECT * FROM Fit_Peoples WHERE id=?", id, (err, data) => {
-            cb(err.data);
+            cb(err, data);
         });
     },
     //Add person
@@ -41,7 +41,7 @@ const model = {
                 return;
             }
             if(data.length < 0) {
-                cb("User not found");
+                cb("Person not found");
             } else {
                 conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ?, address = ? WHERE userName = ?", [input.newfName, input.newlName, input.addr, input.userName],
                 (err, data) => {

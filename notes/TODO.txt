@@ -2,4 +2,5 @@ TODO:
 - Delete functions
 - Check for create_time setup
 - Check if intermediate model/controller needed
+- NOTE: connected to intermediate tables confirm query uses intermediate table
 
