@@ -3,20 +3,21 @@ const people = require("./models/people");
 
 const app = express.Router();
 
+//get all
 app.get("/", (req, res) => {
     people.getAll((err, data) => {
         if(err) throw(err);
         res.send(data);
     });
 });
-
-app.get("./:id", (req, res) => {
+//get person via id
+app.get("/:id", (req, res) => {
     people.get(req.param.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
-
+//add new person
 app.post("/", (req, res) => {
     console.log(req.body)
     people.add(req.body, (err, data) => {
@@ -24,18 +25,10 @@ app.post("/", (req, res) => {
         res.send(data);
     });
 });
-
-app.post("/editName", (req, res) => {
+//edit person via username
+app.post("/edit", (req, res) => {
     console.log(req.body)
-    people.editName(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
-});
-
-app.post("/editAddr", (req, res) => {
-    console.log(req.body)
-    people.editAddr(req.body, (err, data) => {
+    people.add(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });

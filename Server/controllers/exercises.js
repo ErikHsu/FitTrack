@@ -1,34 +1,34 @@
-const express = require('express');
-const plan = require('../models/workoutPlan');
+const express = require('express'); 
+const exercise = require('../models/exercise');
 
 const app = express.Router();
 
-//get all
+//get all 
 app.get("/", (req, res) => {
-    plan.getAll((err, data) => {
-        if(err) throw err;
-        res.send(dataa);
-    });
-});
-//get workout plan via id
-app.get("/:id", (req, res) => {
-    plan.get((err, data) => {
+    exercise.getAll((err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
-//add workout plan
+//get exercise via id
+app.get("/:id", (req, res) => {
+    exercise.get((err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//add exercise
 app.post("/", (req, res) => {
     console.log(req.body)
-    plan.add(req.body, (err, data) => {
+    exercise.add(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
-//edit workout plan
+//edit exercise
 app.post("/edit", (req, res) => {
     console.log(req.body)
-    plan.add(req.body, (err, data) => {
+    exercise.editPlan(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });

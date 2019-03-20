@@ -29,7 +29,7 @@ const model = {
         });
     },
     //Edit exercise_type
-    editPlan(input, cb) {
+    editType(input, cb) {
         var exerciseType = input.exerciseType;
         var originalType = input.originalType;
         var bodyFocus = input.bodyFocus;

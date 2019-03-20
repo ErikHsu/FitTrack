@@ -29,7 +29,7 @@ const model = {
         });
     },
     //Edit food
-    editPlan(input, cb) {
+    editFood(input, cb) {
         var foodName = input.foodName;
         var originalFood = input.originalFood;
         conn.query("SELECT 1 FROM Fit_Users_Foods WHERE foodName = ? ORDER BY foodName LIMIT 1", [[originalFood]],
