@@ -34,7 +34,7 @@ const model = {
         var lName = input.lName;
         var addr = input.addr;
         var userName = input.userName;
-        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
+        conn.query("SELECT 1 FROM Fit_Peoples WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
         (err, data) => {
             if(err) {
                 cb(err);
@@ -43,7 +43,7 @@ const model = {
             if(data.length < 0) {
                 cb("Person not found");
             } else {
-                conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ?, address = ? WHERE userName = ?", [input.newfName, input.newlName, input.addr, input.userName],
+                conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ?, address = ? WHERE userName = ?", [[fName, lName, addr, userName]],
                 (err, data) => {
                     if(err) {
                         cb(err);

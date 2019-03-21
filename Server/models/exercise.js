@@ -32,7 +32,7 @@ const model = {
     editExercise(input, cb) {
         var exerciseName = input.exerciseName;
         var originalExercise = input.originalExercise;
-        conn.query("SELECT 1 FROM Fit_Plans_Exercises WHERE exerciseName = ? ORDER BY exerciseName LIMIT 1", [[originalExercise]],
+        conn.query("SELECT 1 FROM Fit_Exercises WHERE exerciseName = ? ORDER BY exerciseName LIMIT 1", [[originalExercise]],
         (err, data) => {
             if(err) {
                 cb(err);

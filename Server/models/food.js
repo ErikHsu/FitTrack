@@ -9,7 +9,7 @@ const model = {
     },
     //Get food based on id
     get(id, cb) {
-        conn.query("SELECT * FROM Fit_Foods WHERE id=?", (err, data) => {
+        conn.query("SELECT * FROM Fit_Foods WHERE id=?", id, (err, data) => {
             cb(err, data);
         });
     },
@@ -32,7 +32,7 @@ const model = {
     editFood(input, cb) {
         var foodName = input.foodName;
         var originalFood = input.originalFood;
-        conn.query("SELECT 1 FROM Fit_Users_Foods WHERE foodName = ? ORDER BY foodName LIMIT 1", [[originalFood]],
+        conn.query("SELECT 1 FROM Fit_Foods WHERE foodName = ? ORDER BY foodName LIMIT 1", [[originalFood]],
         (err, data) => {
             if(err) {
                 cb(err);

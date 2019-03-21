@@ -9,7 +9,7 @@ const model = {
     },
     //Get exercise_type based on id
     get(id, cb) {
-        conn.query("SELECT * FROM Fit_Exercises_Types WHERE id=?", (err, data) => {
+        conn.query("SELECT * FROM Fit_Exercise_Types WHERE id=?", (err, data) => {
             cb(err, data);
         });
     },
@@ -33,7 +33,7 @@ const model = {
         var exerciseType = input.exerciseType;
         var originalType = input.originalType;
         var bodyFocus = input.bodyFocus;
-        conn.query("SELECT 1 FROM Fit_Plans_Exercises WHERE exerciseType = ? ORDER BY exerciseType LIMIT 1", [[originalExercise]],
+        conn.query("SELECT 1 FROM Fit_Exercise_Types WHERE exerciseType = ? ORDER BY exerciseType LIMIT 1", [[originalExercise]],
         (err, data) => {
             if(err) {
                 cb(err);
