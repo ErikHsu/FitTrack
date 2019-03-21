@@ -25,6 +25,13 @@ app.post("/addUser", (req, res) => {
         res.send(data);
     });
 });
+//login
+app.post("/login", (req, res) => {
+    user.login(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
 //get password
 app.get("/:userName", (req, res) => {
     user.getPass(req.params.userName, (err, data) => {

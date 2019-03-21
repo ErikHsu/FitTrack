@@ -1,4 +1,5 @@
 const conn = require('./mysql_connection');
+const bcrypt = require('bcrypt');
 
 const model = {
     //Get all users
@@ -13,13 +14,16 @@ const model = {
             cb(err, data);
         });
     },
-    //Add new user (registration)
+    //Add new user (uses bcrypt to hash user passwords)
     add(input, cb) {
         if(input.password.length < 8) {
             cb(Error('Password must be at least 8 characters'))
         }
+        //bcrypt hash password
+        var hash = bcrypt.hashSync(input.password, 10);
+                
         conn.query("INSERT INTO Fit_Users (userName, password, created_at) VALUES (?)",
-        [[input.userName, input.password, new Date()]],
+        [[input.userName, hash, new Date()]],
 
         (err, data) => {
             if(err) {
@@ -31,7 +35,32 @@ const model = {
             });
         });
     },
+    //Login (uses bcrypt to compare entered vs saved password hash)
+    login(input, cb) {
+        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[input.userName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            }
+            if(data.length <= 0) {
+                cb("User not found");
+            } else {
+                conn.query("SELECT password FROM Fit_Users WHERE userName =?", [[input.userName]], 
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    bcrypt.compare(input.password, data[0].password, (err, data) => {
+                        cb(err, data);
+                    });                    
+                });
+            };
+        });    
+    },
     //Get password via userName
+//TODO: change function to account for hashing
     getPass(input, cb) {
         conn.query("SELECT password FROM Fit_Users WHERE userName = ?", [[input.userName]],
         (err, data) => {
@@ -45,6 +74,7 @@ const model = {
         });
     },
     //Edit User
+//TODO: edit function to account for hashing
     edit(input, cb) {
         var userName = input.userName;
         var password = input.password;
@@ -68,6 +98,7 @@ const model = {
         });
     },
     //Change password
+//TODO: edit function to account for hashing
     editPassword(input, cb) {
         var userName = input.userName;
         var password = input.password;
