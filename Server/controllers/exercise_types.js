@@ -33,3 +33,5 @@ app.post("/edit", (req, res) => {
         res.send(data);
     });
 });
+
+module.exports = app;

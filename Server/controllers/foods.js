@@ -1,5 +1,5 @@
 const express = require('express');
-const food = requre('../models/food');
+const food = require('../models/food');
 
 const app = express.Router();
 
@@ -12,13 +12,13 @@ app.get("/", (req, res) => {
 });
 //get food by id
 app.get("/:id", (req, res) => {
-    food.get((err, data) => {
+    food.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
 });
 //add food
-app.post("/", (req, res) => {
+app.post("/addFood", (req, res) => {
     console.log(req.body)
     food.add(req.body, (err, data) => {
         if(err) throw err;

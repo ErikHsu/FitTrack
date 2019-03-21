@@ -9,7 +9,7 @@ const model = {
     },
     //Get specific user by id
     get(id, cb) {
-        conn.query("SELECT * FROM Fit_Users WHERE Id=?", id, (err, data) => {
+        conn.query("SELECT * FROM Fit_Users WHERE id=?", id, (err, data) => {
             cb(err, data);
         });
     },

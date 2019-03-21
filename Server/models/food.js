@@ -23,11 +23,12 @@ const model = {
                 cb(err);
                 return;
             }
-            model.get(data.insertID, (err, data) => {
+            model.get(data.insertId, (err, data) => {
                 cb(err, data);
             });
         });
     },
+    
     //Edit food
     editFood(input, cb) {
         var foodName = input.foodName;
