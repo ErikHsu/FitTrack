@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start":"nodemon server/index.js --watch server"
+    "start": "nodemon server/index.js --watch server"
   },
   "repository": {
     "type": "git",
@@ -15,11 +15,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.6.6",
-    "vue-router": "^3.0.1",
+    "bcrypt": "^3.0.5",
+    "dotenv": "^6.2.0",
     "express": "~4.16.4",
     "mysql": "^2.16.0",
-    "dotenv": "^6.2.0"
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
