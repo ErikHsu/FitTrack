@@ -33,5 +33,21 @@ app.post("/edit", (req, res) => {
         res.send(data);
     });
 });
+//delete exercise type via id
+app.post("/:id", (req, res) => {
+    console.log(req.body)
+    exercise_type.deleteId(req.params.id, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//delete exercise type via typeName
+app.post("/deleteType", (req, res) => {
+    console.log(req.body)
+    exercise_type.deleteWorkoutPlan(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
 
 module.exports = app;

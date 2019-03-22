@@ -33,5 +33,21 @@ app.post("/edit", (req, res) => {
         res.send(data);
     });
 });
+//delete exercise via id
+app.post("/:id", (req, res) => {
+    console.log(req.body)
+    exercise.deleteId(req.params.id, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//delete exercise via exerciseName
+app.post("/deleteExercise", (req, res) => {
+    console.log(req.body)
+    exercise.deleteWorkoutPlan(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
 
 module.exports = app;

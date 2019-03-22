@@ -104,8 +104,8 @@ const model = {
             cb(err, data);
         });
     },
-    //Delete workout plan based on name
-    deleteWorkoutPlan(input, data) {
+    //Delete body history based on name
+    deleteBodyHistory(input, data) {
         conn.query("SELECT 1 FROM Fit_Body_History WHERE userName = ? ORDER BY userName LIMIT 1", [[input.userName]],
         (err, data) => {
             if(err) {

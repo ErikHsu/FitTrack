@@ -63,5 +63,21 @@ app.post("/editUserName", (req, res) => {
         res.send(data);
     });
 });
+//delete via id
+app.post("/:id", (req, res) => {
+    console.log(req.body)
+    user.deleteId(req.params.id, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//Delete via username
+app.post("/deleteUser", (req, res) => {
+    console.log(req.body)
+    user.deleteUser(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
 
 module.exports = app;

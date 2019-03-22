@@ -33,5 +33,21 @@ app.post("/edit", (req, res) => {
         res.send(data);
     });
 });
+//delete food via id
+app.post("/:id", (req, res) => {
+    console.log(req.body)
+    food.deleteId(req.params.id, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//delete food via foodName
+app.post("/deleteFood", (req, res) => {
+    console.log(req.body)
+    food.deleteFood(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
 
 module.exports = app;

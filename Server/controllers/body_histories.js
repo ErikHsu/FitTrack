@@ -57,5 +57,21 @@ app.post("/editGender", (req, res) => {
         res.send(data);
     });
 });
+//delete via id
+app.post("/:id", (req, res) => {
+    console.log(req.body)
+    body_history.deleteId(req.params.id, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//delete via userName
+app.post("/deleteBodyHistory", (req, res) => {
+    console.log(req.body)
+    body_history.deleteBodyHistory(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
 
 module.exports = app;

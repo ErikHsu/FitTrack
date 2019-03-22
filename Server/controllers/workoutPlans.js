@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 //get workout plan via id
 app.get("/:id", (req, res) => {
-    plan.get((err, data) => {
+    plan.get(req.params.id, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
@@ -28,7 +28,23 @@ app.post("/", (req, res) => {
 //edit workout plan
 app.post("/edit", (req, res) => {
     console.log(req.body)
-    plan.add(req.body, (err, data) => {
+    plan.editPlan(req.body, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//delete via id
+app.post("/:id", (req, res) => {
+    console.log(req.body)
+    plan.deleteId(req.params.id, id, (err, data) => {
+        if(err) throw err;
+        res.send(data);
+    });
+});
+//delete via planName
+app.post("/deleteWorkout", (req, res) => {
+    console.log(req.body)
+    plan.deleteWorkoutPlan(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });
