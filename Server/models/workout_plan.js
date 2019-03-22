@@ -54,7 +54,36 @@ const model = {
             };
         }); 
     },
- //TODO: Remove method for custom inserted workouts.  Do not allow deletion of original presets. (Check FK cascade)   
+    //Delete via id
+    deleteId(id, cb) {
+        conn.query("DELETE FROM Fit_Workout_Plans WHERE id = ?", id, (err, data) => {
+            cb(err, data);
+        });
+    },
+    //Delete workout plan based on name
+    deleteWorkoutPlan(input, data) {
+        conn.query("SELECT 1 FROM Fit_Workout_Plans WHERE planName = ? ORDER BY planName LIMIT 1", [[input.planName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            };
+            if(data.length < 0) {
+                cb(Error("Workout not found"));
+            } else {
+                conn.query("DELETE FROM Fit_Workout_Plans WHERE planName = ?", [[input.planName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    model.get(data.insertId, (err, data) => {
+                        cb(err, data);
+                    });
+                });
+            };
+        });
+    }, 
 };
 
 module.exports = model;

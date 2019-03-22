@@ -56,7 +56,36 @@ const model = {
             };
         });
     },
-    //TODO: Remove method (check FK cascade)
+    //Delete via id
+    deleteId(id, cb) {
+        conn.query("DELETE FROM Fit_Peoples WHERE id = ?", id, (err, data) => {
+            cb(err, data);
+        });
+    },
+    //Delete person based on name
+    deletePeople(input, data) {
+        conn.query("SELECT 1 FROM Fit_Peoples WHERE userName = ? ORDER BY userName LIMIT 1", [[input.userName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            };
+            if(data.length < 0) {
+                cb(Error("Person not found"));
+            } else {
+                conn.query("DELETE FROM Fit_Peoples WHERE userName = ?", [[input.userName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    model.get(data.insertId, (err, data) => {
+                        cb(err, data);
+                    });
+                });
+            };
+        });
+    }, 
 };
 
 module.exports = model; 

@@ -54,7 +54,36 @@ const model = {
             };
         }); 
     },
- //TODO: Remove method for exercise. (Check FK cascade)   
+    //Delete via id
+    deleteId(id, cb) {
+        conn.query("DELETE FROM Fit_Exercises WHERE id = ?", id, (err, data) => {
+            cb(err, data);
+        });
+    },
+    //Delete workout plan based on name
+    deleteWorkoutPlan(input, data) {
+        conn.query("SELECT 1 FROM Fit_Exercises WHERE exerciseName = ? ORDER BY exerciseName LIMIT 1", [[input.exerciseName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            };
+            if(data.length < 0) {
+                cb(Error("Exercise not found"));
+            } else {
+                conn.query("DELETE FROM Fit_Exercises WHERE exerciseName = ?", [[input.exerciseName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    model.get(data.insertId, (err, data) => {
+                        cb(err, data);
+                    });
+                });
+            };
+        });
+    }, 
 };
 
 module.exports = model;

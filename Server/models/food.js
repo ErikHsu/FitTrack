@@ -55,7 +55,37 @@ const model = {
             };
         }); 
     },
- //TODO: Remove method for food. (Check FK cascade)   
+    //Delete via id
+    deleteId(id, cb) {
+        conn.query("DELETE FROM Fit_Foods WHERE id = ?", id, (err, data) => {
+            cb(err, data);
+        });
+    },
+    //Delete food based on name
+    deleteFood(input, data) {
+        conn.query("SELECT 1 FROM Fit_Foods WHERE foodName = ? ORDER BY foodName LIMIT 1", [[input.foodName]],
+        (err, data) => {
+            if(err) {
+                cb(err);
+                return;
+            };
+            if(data.length < 0) {
+                cb(Error("Food not found"));
+            } else {
+                conn.query("DELETE FROM Fit_Foods WHERE foodName = ?", [[input.foodName]],
+                (err, data) => {
+                    if(err) {
+                        cb(err);
+                        return;
+                    }
+                    model.get(data.insertId, (err, data) => {
+                        cb(err, data);
+                    });
+                });
+            };
+        });
+    }, 
+
 };
 
 module.exports = model;
