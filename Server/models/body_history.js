@@ -15,18 +15,22 @@ const model = {
     },
     //Add new body history
     add(input, cb) {
-//TODO: Data validation check if already exists and abnormal values
-        conn.query("INSERT INTO Fit_Body_History (weight, height, gender, userName, created_at) VALUES (?)",
-        [[input.weight, input.height, input.gender, input.userName, new Date()]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            }
-            model.get(data.insertId, (err, data) => {
-                cb(err, data);
-            });
-        });
+//TODO: Data validation check if already exists
+        if(input.weight < 1000 && input.height < 1000) {
+            conn.query("INSERT INTO Fit_Body_History (weight, height, gender, userName, created_at) VALUES (?)",
+            [[input.weight, input.height, input.gender, input.userName, new Date()]],
+            (err, data) => {
+                if(err) {
+                    cb(err);
+                    return;
+                }
+                model.get(data.insertId, (err, data) => {
+                    cb(err, data);
+                });
+            });       
+        } else {
+            cb(Error("Outside of normal scope: please verify weight and height."))
+        }
     },
     //Edit user body history
     editBodyHistory(input, cb) {

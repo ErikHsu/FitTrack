@@ -15,18 +15,21 @@ const model = {
     },
     //Add food
     add(input, cb) {
-//TODO: Data validation: check if already exists and abnormal values
-        conn.query("INSERT INTO Fit_Foods (foodName, created_at, calories, carbohydrates, protein, fat) VALUES (?)",
-        [[input.foodName, new Date(), input.calories, input.carbohydrates, input.protein, input.fat]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            }
-            model.get(data.insertId, (err, data) => {
-                cb(err, data);
+        if(input.calories < 10000 && input.carbohydrates < 100 && input.protein < 100 && input.fat < 100) {
+            conn.query("INSERT INTO Fit_Foods (foodName, created_at, calories, carbohydrates, protein, fat) VALUES (?)",
+            [[input.foodName, new Date(), input.calories, input.carbohydrates, input.protein, input.fat]],
+            (err, data) => {
+                if(err) {
+                    cb(err);
+                    return;
+                }
+                model.get(data.insertId, (err, data) => {
+                    cb(err, data);
+                });
             });
-        });
+        } else {
+            cb(Error("Outside normal ranges: Please double check your nutritional information"));
+        };
     },
     
     //Edit food
