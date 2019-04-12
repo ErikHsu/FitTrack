@@ -1,64 +1,44 @@
-const express = require('express');
+const express = require('./node_modules/express');
 const user = require('../models/user');
 
 const app = express.Router();
 
 //get all
-app.get("/", (req, res) => {
-    user.getAll((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/", (req, res, next) => {
+    user.getAll()
+    .then(x => res.send(x))
+    .catch(next)
 });
 //get via id
-app.get("/:id", (req, res) => {
-    user.get(req.params.id, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res, next) => {
+    user.get(req.params.id)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //add user
-app.post("/addUser", (req, res) => {
-    console.log(req.body)
-    user.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/addUser", (req, res, next) => {
+    user.add(req.body)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //login
-app.post("/login", (req, res) => {
-    user.login(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/login", (req, res, next) => {
+    user.login(req.body.userName, req.body.password)
+    .then(x => res.send(x))
+    .catch(next)
 });
-//get password
-app.get("/:userName", (req, res) => {
-    user.getPass(req.params.userName, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+//edit username
+app.post("/editUserName", (req, res, next) => {
+    user.editUserName(req.body.userName, req.body.password, req.body.newUserName)
+    .then(x => res.send(x))
+    .catch(next)
 });
-//edit user
-app.post("/edit", (req, res) => {
-    console.log(req.body)
-    user.edit(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
-});
+
+
 //edit password
 app.post("/editPassword", (req, res) => {
     console.log(req.body)
     user.editPassword(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
-});
-//edit username
-app.post("/editUserName", (req, res) => {
-    console.log(req.body)
-    user.editUserName(req.body, (err, data) => {
         if(err) throw err;
         res.send(data);
     });

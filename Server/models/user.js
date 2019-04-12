@@ -1,158 +1,86 @@
 const conn = require('./mysql_connection');
-const bcrypt = require('bcrypt');
+const bcrypt = require('./node_modules/bcrypt');
+
+const SALT_ROUNDS = 10;
 
 const model = {
     //Get all users
-    getAll(cb) {
-        conn.query("SELECT * FROM Fit_Users", (err, data) => {
-            cb(err, data);
-        });
+    async getAll() {
+        return await conn.query("SELECT * FROM Fit_Users");
     },
+
     //Get specific user by id
-    get(id, cb) {
-        conn.query("SELECT * FROM Fit_Users WHERE id=?", id, (err, data) => {
-            cb(err, data);
-        });
+    async get(id) {
+        const data = await conn.query("SELECT * FROM Fit_Users WHERE id=?", id);
+        if(!data){
+            throw Error("User not found");
+        }
+        return await data[0];
     },
+
     //Add new user (uses bcrypt to hash user passwords)
-    add(input, cb) {
+    async add(input) {
+        if(!input.password) {
+            cb(Error('Password is required'));
+        }
         if(input.password.length < 8) {
             cb(Error('Password must be at least 8 characters'))
         }
         //bcrypt hash password
-        var hash = bcrypt.hashSync(input.password, 10);
-                
-        conn.query("INSERT INTO Fit_Users (userName, password, created_at) VALUES (?)",
-        [[input.userName, hash, new Date()]],
-
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            }
-            model.get(data.insertId, (err, data) => {
-                cb(err, data);
-            });
-        });
+        const hashedPassword = await bcrypt.hash(input.password, SALT_ROUNDS)
+        const data = await conn.query("INSERT INTO Fit_Users (userName, password, created_at) VALUES (?)",
+            [[input.userName, hashedPassword, new Date()]],
+        );
+        return await model.get(data.insertId);
     },
     //Login (uses bcrypt to compare entered vs saved password hash)
-    login(input, cb) {
-        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[input.userName]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            }
-            if(data.length <= 0) {
-                cb("User not found");
-            } else {
-                conn.query("SELECT password FROM Fit_Users WHERE userName =?", [[input.userName]], 
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    }
-                    bcrypt.compare(input.password, data[0].password, (err, data) => {
-                        cb(err, data);
-                    });                    
-                });
-            };
-        });    
+    async login(userName, password) {
+        const data = await conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)
+        if(data.length == 0) {
+            cb("User not found");
+        }
+        const x = await bcrypt.compare(password, data[0].Password);
+        if(x){
+            const user = { ...data[0], password: null};
+        } else {
+            throw Error('Wrong Password');
+        }
     },
-    //Get password via userName
-//TODO: change function to account for hashing
-    getPass(input, cb) {
-        conn.query("SELECT password FROM Fit_Users WHERE userName = ?", [[input.userName]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            }
-            model.get(data.insertId, (err, data) => {
-                cb(err, data);
-            });
-        });
-    },
-    //Edit User
-//TODO: edit function to account for hashing
-    edit(input, cb) {
-        var userName = input.userName;
-        var password = input.password;
-        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            }
-            if(data.length < 0) {
-                cb("User not found");
-            } else {
-                conn.query("UPDATE Fit_Users SET userName = ?, password = ? WHERE userName = ?", [[userName, password, userName]],
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    }   
-                });
-            };
-        });
+    //Edit UserName
+    async editUserName(userName, password, newUserName) {
+        const data = conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)
+        if(data.length = 0) {
+            throw Error("User not found");
+        }
+        const x = await bcrypt.compare(password, data[0].password)
+        if(x)
+        {
+            conn.query("UPDATE Fit_Users SET userName = ?, WHERE userName = ?", [newUserName, userName]);
+            return { status: "success", msg: "Username Successfully Changed" };
+        } else {
+            throw Error('Wrong Password');
+        }
     },
     //Change password
-//TODO: edit function to account for hashing
-    editPassword(input, cb) {
-        var userName = input.userName;
-        var password = input.password;
-        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            };
-            if(data.length < 0) {
-                cb(Error("User not found"));
-            } else {
-                if(password.length < 8) {
-                    cb(Error("Password must be at least 8 characters"));
-                };
-                conn.query("UPDATE Fit_Users SET password = ? WHERE userName = ?", [[password, userName]],
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    }
-                    model.get(data.insertId, (err, data) => {
-                        cb(err, data);
-                    });
-                });
-            };
-        });
-    },
-    //Change userName
-    editUserName(input, cb) {
-        var newUserName = input.newUserName;
-        var userName = input.userName;
-        conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            };
-            if(data.length < 0) {
-                cb(Error("User not found"));
-            } else {
-                conn.query("UPDATE Fit_Users SET userName = ? WHERE userName = ?", [[newUserName, userName]],
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    }
-                    model.get(data.insertId, (err, data) => {
-                        cb(err, data);
-                    });
-                });
-            };
-        });
-    },
+    async editPassword(userName, oldPassword, newPassword) {
+        const data = await conn.query("SELECT 1 FROM Fit_Users WHERE userName = ?, ORDER BY userName LIMIT 1", userName)
+        if(data.length == 0) {
+            cb(Error("User not found"));
+        }
+        //check oldPassword for match
+        if(data[0].password == "" || await bcrypt.compare(oldPassword, data[0].password)) {
+            const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+            await conn.query("UPDATE Fit_Users SET password = ? WHERE userName = ?", [hashedPassword, userName]);
+            return { status: "success", msg: "Password Successfully Changed" };
+        } else {
+            throw Error('Wrong Password');
+        }
+    }
+};
+
+module.exports = model;
+
+/*
     //Delete via id
     deleteId(id, cb) {
         conn.query("DELETE FROM Fit_Users WHERE id = ?", id, (err, data) => {
@@ -161,8 +89,7 @@ const model = {
         });
     },
     //Delete via userName
-//TODO: password verification
-    deleteUser(input, data) {
+    deleteUser(input, cb) {
         conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", [[input.userName]],
         (err, data) => {
             if(err) {
@@ -172,19 +99,21 @@ const model = {
             if(data.length < 0) {
                 cb(Error("User not found"));
             } else {
-                conn.query("DELETE FROM Fit_Users WHERE userName = ?", [[input.userName]],
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    }
-                    model.get(data.insertId, (err, data) => {
-                        cb(err, data);
+                if(bcrypt.compare(input.password, data[0].password)) {
+                    conn.query("DELETE FROM Fit_Users WHERE userName = ?", [[input.userName]],
+                    (err, data) => {
+                        if(err) {
+                            cb(err);
+                            return;
+                        }
+                        model.get(data.insertId, (err, data) => {
+                            cb(err, data);
+                        });
                     });
-                });
-            };
+                };   
+            };                         
         });
     },
-};
+}; */
 
-module.exports = model;
+
