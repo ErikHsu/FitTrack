@@ -1,4 +1,4 @@
-const express = require('./node_modules/express');
+const express = require('express');
 const body_history = require('../models/body_history');
 
 const app = express.Router();

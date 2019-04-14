@@ -1,10 +1,10 @@
-const express = require('./node_modules/express');
+const express = require('express');
 const user = require('../models/user');
 
 const app = express.Router();
 
 //get all
-app.get("/", (req, res, next) => {
+app.get("/", async (req, res, next) => {
     user.getAll()
     .then(x => res.send(x))
     .catch(next)
@@ -33,16 +33,16 @@ app.post("/editUserName", (req, res, next) => {
     .then(x => res.send(x))
     .catch(next)
 });
-
-
 //edit password
-app.post("/editPassword", (req, res) => {
-    console.log(req.body)
-    user.editPassword(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/editPassword", (req, res, next) => {
+    user.editPassword(req.body.userName, req.body.oldPassword, req.body.newPassword)
+    .then(x => res.send(x))
+    .catch(next)
 });
+
+module.exports = app;
+
+/*
 //delete via id
 app.post("/:id", (req, res) => {
     console.log(req.body)
@@ -59,5 +59,4 @@ app.post("/deleteUser", (req, res) => {
         res.send(data);
     });
 });
-
-module.exports = app;
+*/

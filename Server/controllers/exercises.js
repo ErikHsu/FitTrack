@@ -1,4 +1,4 @@
-const express = require('./node_modules/express'); 
+const express = require('express'); 
 const exercise = require('../models/exercise');
 
 const app = express.Router();

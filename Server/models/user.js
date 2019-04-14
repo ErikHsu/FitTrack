@@ -1,5 +1,5 @@
 const conn = require('./mysql_connection');
-const bcrypt = require('./node_modules/bcrypt');
+const bcrypt = require('bcrypt');
 
 const SALT_ROUNDS = 10;
 
@@ -37,7 +37,7 @@ const model = {
     async login(userName, password) {
         const data = await conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)
         if(data.length == 0) {
-            cb("User not found");
+            throw Error("User not found");
         }
         const x = await bcrypt.compare(password, data[0].Password);
         if(x){
@@ -52,10 +52,10 @@ const model = {
         if(data.length = 0) {
             throw Error("User not found");
         }
-        const x = await bcrypt.compare(password, data[0].password)
+        const x = bcrypt.compare(password, data[0].password)
         if(x)
         {
-            conn.query("UPDATE Fit_Users SET userName = ?, WHERE userName = ?", [newUserName, userName]);
+            await conn.query("UPDATE Fit_Users SET userName = ?, WHERE userName = ?", [newUserName, userName]);
             return { status: "success", msg: "Username Successfully Changed" };
         } else {
             throw Error('Wrong Password');

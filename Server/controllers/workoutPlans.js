@@ -1,38 +1,36 @@
-const express = require('./node_modules/express');
+const express = require('express');
 const plan = require('../models/workout_plan');
 
 const app = express.Router();
 
 //get all
-app.get("/", (req, res) => {
-    plan.getAll((err, data) => {
-        if(err) throw err;
-        res.send(dataa);
-    });
+app.get("/", (req, res, next) => {
+    plan.getAll()
+    .then(x => res.send(x))
+    .catch(next)
 });
 //get workout plan via id
-app.get("/:id", (req, res) => {
-    plan.get(req.params.id, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res, next) => {
+    plan.get(req.params.id)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //add workout plan
-app.post("/", (req, res) => {
-    console.log(req.body)
-    plan.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/", (req, res, next) => {
+    plan.add(req.body)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //edit workout plan
-app.post("/edit", (req, res) => {
-    console.log(req.body)
-    plan.editPlan(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/edit", (req, res, next) => {
+    plan.editPlan(req.body.oldWorkoutPlan, newWorkoutPlan)
+    .then(x => res.send(x))
+    .catch(next)
 });
+
+module.exports = app;
+
+/*
 //delete via id
 app.post("/:id", (req, res) => {
     console.log(req.body)
@@ -49,5 +47,4 @@ app.post("/deleteWorkout", (req, res) => {
         res.send(data);
     });
 });
-
-module.exports = app;
+*/

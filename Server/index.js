@@ -1,4 +1,4 @@
-const express = require('./node_modules/express');
+const express = require('express');
 
 const users = require('./controllers/users');
 const peoples = require('./controllers/peoples');

@@ -1,6 +1,6 @@
 // Establishing connection with database
-const mysql = require('./node_modules/mysql')
-    require('./node_modules/dotenv').load();
+const mysql = require('mysql')
+    require('dotenv').load();
 
 const conn = mysql.createPool({
     host: process.env.VUE_APP_MYSQL_HOST,
