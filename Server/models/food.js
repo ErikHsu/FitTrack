@@ -2,62 +2,51 @@ const conn = require("./mysql_connection");
 
 const model = {
     //Get all foods
-    getAll(cb) {
-        conn.query("SELECT * FROM Fit_Foods", (err, data) => {
-            cb(err, data);
-        });
+    async getAll(cb) {
+        return await conn.query("SELECT * FROM Fit_Foods");
     },
+
     //Get food based on id
-    get(id, cb) {
-        conn.query("SELECT * FROM Fit_Foods WHERE id=?", id, (err, data) => {
-            cb(err, data);
-        });
+    async get(id) {
+        const data = conn.query("SELECT * FROM Fit_Foods WHERE id=?", id);
+        if(!data) {
+            throw Error("User not found");
+        }
+        return await data[0];
     },
+
     //Add food
-    add(input, cb) {
+    async add(input) {
         if(input.calories < 10000 && input.carbohydrates < 100 && input.protein < 100 && input.fat < 100) {
-            conn.query("INSERT INTO Fit_Foods (foodName, created_at, calories, carbohydrates, protein, fat) VALUES (?)",
-            [[input.foodName, new Date(), input.calories, input.carbohydrates, input.protein, input.fat]],
-            (err, data) => {
-                if(err) {
-                    cb(err);
-                    return;
-                }
-                model.get(data.insertId, (err, data) => {
-                    cb(err, data);
-                });
-            });
+            const data = conn.query("INSERT INTO Fit_Foods (foodName, created_at, calories, carbohydrates, protein, fat) VALUES (?)",
+                [input.foodName, new Date(), input.calories, input.carbohydrates, input.protein, input.fat]);
+            return await model.get(data.insertId)
         } else {
-            cb(Error("Outside normal ranges: Please double check your nutritional information"));
+            throw Error("Outside reasonable ranges: Please double check your nutritional information");
         };
     },
     
     //Edit food
-    editFood(input, cb) {
-        var foodName = input.foodName;
-        var originalFood = input.originalFood;
-        conn.query("SELECT 1 FROM Fit_Foods WHERE foodName = ? ORDER BY foodName LIMIT 1", [[originalFood]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            };
-            if(data.length < 0) {
-                cb(Error("Food not found"));
+    async editFood(oldFoodName, newFoodName, calories, carbohydrates, protein, fat) {
+        if(calories < 10000 && carbohydrates < 100 && protein < 100 && fat < 100) {
+            const data = conn.query("SELECT 1 FROM Fit_Foods WHERE foodName = ? ORDER BY ? LIMIT 1", 
+                [oldFoodName, newFoodName]);
+            if(data.length = 0) {
+                throw Error("Food not found");
             } else {
-                conn.query("UPDATE Fit_Foods SET foodName = ? WHERE foodName = ?", [[foodName, originalFood]],
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    };
-                    model.get(data.insertId, (err, data) => {
-                        cb(err, data);
-                    });
-                });
-            };
-        }); 
-    },
+                await conn.query("UPDATE Fit_Foods SET foodName = ?, calories = ?, carbohydrates = ?, protein = ?, fat = ? WHERE foodName = ?", 
+                    [foodName, originalFood, calories, carbohydrates, protein, fat]);
+                return { status: "success", msg: "FoodName was Successfully Changed" };
+            }
+        } else {
+            throw Error("Outside reasonable ranges: Please double check your nutritional information");
+        }
+    }
+}
+
+module.exports = model;
+
+    /*
     //Delete via id
     deleteId(id, cb) {
         conn.query("DELETE FROM Fit_Foods WHERE id = ?", id, (err, data) => {
@@ -88,7 +77,6 @@ const model = {
             };
         });
     }, 
-
 };
+*/
 
-module.exports = model;

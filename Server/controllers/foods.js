@@ -4,35 +4,36 @@ const food = require('../models/food');
 const app = express.Router();
 
 //get all
-app.get("/", (req, res) => {
-    food.getAll((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/", (req, res, next) => {
+    food.getAll()
+    .then(x => res.send(x))
+    .catch(next)    
 });
+
 //get food by id
-app.get("/:id", (req, res) => {
-    food.get(req.params.id, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res, next) => {
+    food.get(req.params.id) 
+    .then(x => res.send(x))
+    .catch(next)    
 });
+
 //add food
-app.post("/addFood", (req, res) => {
-    console.log(req.body)
-    food.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/addFood", (req, res, next) => {
+    food.add(req.body)
+    .then(x => res.send(x))
+    .catch(next)    
 });
+
 //edit food
-app.post("/edit", (req, res) => {
-    console.log(req.body)
-    food.editPlan(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/edit", (req, res, next) => {
+    food.editPlan(req.body.oldFoodName, req.body.newFoodName, req.body.calories, req.body.carbohydrates, req.body.protein, req.body) 
+    .then(x => res.send(x))
+    .catch(next)    
 });
+
+module.exports = app;
+
+/*
 //delete food via id
 app.post("/:id", (req, res) => {
     console.log(req.body)
@@ -49,5 +50,4 @@ app.post("/deleteFood", (req, res) => {
         res.send(data);
     });
 });
-
-module.exports = app;
+*/

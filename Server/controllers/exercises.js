@@ -4,35 +4,33 @@ const exercise = require('../models/exercise');
 const app = express.Router();
 
 //get all 
-app.get("/", (req, res) => {
-    exercise.getAll((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/", (req, res, next) => {
+    exercise.getAll()
+    .then(x => res.send(x))
+    .catch(next)
 });
 //get exercise via id
-app.get("/:id", (req, res) => {
-    exercise.get((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res, next) => {
+    exercise.get(req.params.id) 
+    .then(x => res.send(x))
+    .catch(next)
 });
 //add exercise
-app.post("/", (req, res) => {
-    console.log(req.body)
-    exercise.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/addExercise", (req, res, next) => {
+    exercise.add(req.body)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //edit exercise
-app.post("/edit", (req, res) => {
-    console.log(req.body)
-    exercise.editPlan(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/edit", (req, res, next) => {
+    exercise.editPlan(req.body.oldExerciseName, req.body.newExerciseName)
+    .then(x => res.send(x))
+    .catch(next)
 });
+
+module.exports = app;
+
+/*
 //delete exercise via id
 app.post("/:id", (req, res) => {
     console.log(req.body)
@@ -49,5 +47,4 @@ app.post("/deleteExercise", (req, res) => {
         res.send(data);
     });
 });
-
-module.exports = app;
+*/
