@@ -4,35 +4,33 @@ const exercise_type = require('../models/exercise_type');
 const app = express.Router();
 
 //get all
-app.get("/", (req, res) => {
-    exercise_type.getAll((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/", (req, res, next) => {
+    exercise_type.getAll()
+    .then(x => res.send(x))
+    .catch(next)
 });
 //get exercise type by id
-app.get("/:id", (req, res) => {
-    exercise_type.get((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res,next) => {
+    exercise_type.get(req.params.id)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //add exercise type
-app.post("/", (req, res) => {
-    console.log(req.body)
-    exercise_type.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/", (req, res, next) => {
+    exercise_type.add(req.body.exerciseType, req.body.bodyFocus)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //edit exercise type
-app.post("/edit", (req, res) => {
-    console.log(req.body)
-    exercise_type.editType(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/edit", (req, res, next) => {
+    exercise_type.editType(req.body.oldExerciseType, req.body.newExerciseType, req.body.bodyFocus)
+    .then(x => res.send(x))
+    .catch(next)
 });
+
+module.exports = app;
+
+/*
 //delete exercise type via id
 app.post("/:id", (req, res) => {
     console.log(req.body)
@@ -49,5 +47,4 @@ app.post("/deleteType", (req, res) => {
         res.send(data);
     });
 });
-
-module.exports = app;
+*/

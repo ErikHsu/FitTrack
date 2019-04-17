@@ -4,35 +4,33 @@ const body_history = require('../models/body_history');
 const app = express.Router();
 
 //get all
-app.get("/", (req, res) => {
-    body_history.getAll((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/", (req, res, next) => {
+    body_history.getAll()
+    .then(x => res.send(x))
+    .catch(next)
 });
 //get body history via id
-app.get("/:id", (req, res) => {
-    body_history.get((err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.get("/:id", (req, res,next) => {
+    body_history.get(id)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //add new body history
-app.post("/", (req, res) => {
-    console.log(req.body)
-    body_history.add(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/", (req, res, next) => {
+    body_history.add(req.body)
+    .then(x => res.send(x))
+    .catch(next)
 });
 //edit body history of user
-app.post("/edit", (req, res) => {
-    console.log(req.body)
-    body_history.editBodyHistory(req.body, (err, data) => {
-        if(err) throw err;
-        res.send(data);
-    });
+app.post("/edit", (req, res, next) => {
+    body_history.editBodyHistory(req.body.userName, req.body.weight, req.body.height, req.body.gender)
+    .then(x => res.send(x))
+    .catch(next)
 });
+
+module.exports = app;
+
+/*
 //edit weight
 app.post("/editWeight", (req, res) => {
     console.log(req.body)
@@ -73,5 +71,4 @@ app.post("/deleteBodyHistory", (req, res) => {
         res.send(data);
     });
 });
-
-module.exports = app;
+*/

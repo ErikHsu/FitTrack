@@ -2,66 +2,45 @@ const conn = require("./mysql_connection");
 
 const model = {
     //Get all body history
-    getAll(cb) {
-        conn.query("SELECT * FROM Fit_Body_History", (err, data) => {
-            cb(err, data);
-        });
+    async getAll(cb) {
+        return await conn.query("SELECT * FROM Fit_Body_History")
     },
     //Get specific body history by id
-    get(id, cb) {
-        conn.query("SELECT * FROM Fit_Body_History WHERE id=?", id, (err, data) => {
-            cb(err, data);
-        });
+    async get(id) {
+        const data = conn.query("SELECT * FROM Fit_Body_History WHERE id=?", id);
+        if(!data) {
+            throw Error("History not found");
+        }
+        return await data[0];
     },
     //Add new body history
-    add(input, cb) {
-//TODO: Data validation check if already exists
+    async add(input) {
         if(input.weight < 1000 && input.height < 1000) {
-            conn.query("INSERT INTO Fit_Body_History (weight, height, gender, userName, created_at) VALUES (?)",
-            [[input.weight, input.height, input.gender, input.userName, new Date()]],
-            (err, data) => {
-                if(err) {
-                    cb(err);
-                    return;
-                }
-                model.get(data.insertId, (err, data) => {
-                    cb(err, data);
-                });
-            });       
+            const data = conn.query("INSERT INTO Fit_Body_History (weight, height, gender, userName, created_at) VALUES (?)",
+                [input.weight, input.height, input.gender, input.userName, new Date()]);
+            return await model.get(data.insertId);
         } else {
-            cb(Error("Outside of normal scope: please verify weight and height."))
+            throw Error("Outside of normal scope: please verify weight and height.");
         }
     },
     //Edit user body history
-    editBodyHistory(input, cb) {
-        var userName = input.userName;
-        var weight = input.weight;
-        var height = input.height;
-        var gender = input.gender;
-        conn.query("SELECT 1 FROM Fit_Body_History WHERE userName = ? ORDER BY userName LIMIT 1", [[userName]],
-        (err, data) => {
-            if(err) {
-                cb(err);
-                return;
-            };
-            if(data.length < 0) {
-                cb(Error("Body History not found"));
-            } else {
-                conn.query("UPDATE Fit_Body_History SET weight = ?, height = ?, gender = ?", [[weight, height, gender]],
-                (err, data) => {
-                    if(err) {
-                        cb(err);
-                        return;
-                    };
-                    model.get(data.insertId, (err, data) => {
-                        cb(err, data);
-                    });
-                });
-            };
-        });
+    async editBodyHistory(userName, weight, height, gender) {
+        const data = conn.query("SELECT 1 FROM Fit_Body_History WHERE userName = ? ORDER BY userName LIMIT 1", [userName]);
+        if(data.length = 0)
+        {
+            throw Error("User not found");
+        } else {
+            await conn.query("UPDATE Fit_Body_History SET weight = ?, height = ?, gender = ?", [weight, height, gender]);
+            return { status: "success", msg: "History Successfully Changed" };
+        }
     },
+}
+
+module.exports = model;
+
+/* Unnecessary(?) general update will work with same values updating
     //Edit weight
-    editWeight(input, cb) {
+    async editWeight(input, cb) {
         conn.query("UPDATE Fit_Body_History SET weight = ? WHERE userName = ?",
         [[input.weight, input.userName]],
         (err, data) => {
@@ -133,5 +112,4 @@ const model = {
         });
     }, 
 };
-
-module.exports = model;
+*/

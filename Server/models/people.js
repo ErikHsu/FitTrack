@@ -31,7 +31,7 @@ const model = {
             throw Error("Person not found");
         } else {
             await conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ?, address = ? WHERE userName = ?", 
-                [fName, lName, addr, userName]);
+                [firstName, lastName, address, userName]);
             return { status: "Success", msg: "Personal Info Successfully Changed" };
         }
     },
