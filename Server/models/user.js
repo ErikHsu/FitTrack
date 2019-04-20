@@ -1,7 +1,9 @@
 const conn = require('./mysql_connection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const SALT_ROUNDS = 10;
+const JWT_SECRET = process.env.JWT_SECRET || 'some long string..';
 
 const model = {
     //Get all users
@@ -21,10 +23,10 @@ const model = {
     //Add new user (uses bcrypt to hash user passwords)
     async add(input) {
         if(!input.password) {
-            cb(Error('Password is required'));
+            throw Error('Password is required');
         }
         if(input.password.length < 8) {
-            cb(Error('Password must be at least 8 characters'))
+            throw Error('Password must be at least 8 characters');
         }
         //bcrypt hash password
         const hashedPassword = await bcrypt.hash(input.password, SALT_ROUNDS)
@@ -33,6 +35,11 @@ const model = {
         );
         return await model.get(data.insertId);
     },
+
+    getFromToken(token) {
+        return jwt.verify(token, JWT_SECRET);
+    },
+
     //Login (uses bcrypt to compare entered vs saved password hash)
     async login(userName, password) {
         const data = await conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)

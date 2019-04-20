@@ -1,37 +1,81 @@
 <template>
-    <div class="card text-white bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-            <font color="black">
-                <h2 class="card-title mt-3 text-center">Create Account</h2>
-            </font>
-            <p class="text-center text-primary">Get started with your free account</p>
-            <p class="divider-text">
-                <span class="bg-light"></span>
-            </p>
+    <div class="card bg-light">
+        <div class="card-body">
+            <h2 class="card-title">Register</h2>
             <div class="card-text">
+                <p class="text-primary">Get started with your free account</p>
                 <form @submit.prevent="submit">
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="username">Username</i>
-                            </span>
-                        </div>
+                    <div class="form-group">
+                        <label for="UserName">Username</label>
                         <input
-                            userName
-                            class="form-control"
-                            placeholder="Desired username"
                             type="text"
+                            class="form-control"
+                            v-model="data.userName"
+                            name="username"
+                            id="username"
+                            aria-describedby="helpUserName"
+                            placeholder="username"
                         >
+                        <small
+                            id="helpUserName"
+                            class="form-text text-muted"
+                        >Please enter your username here</small>
                     </div>
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="data.password"
+                            name="password"
+                            id="password"
+                            aria-describedby="helpPassword"
+                            placeholder="password"
+                        >
+                        <small
+                            id="helpPassword"
+                            class="form-text text-muted"
+                        >Please enter your password here</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
-        </article>
+        </div>
+
+        <div class="card border-success" v-if="newUser">
+            <div class="card-body">
+                <h4 class="card-title">Congrats! You've Registered</h4>
+                <p class="card-text">{{newUser.FirstName}} {{newUser.LastName}}</p>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-export default {};
+import { Globals } from '@/models/api'
+import { Register } from '@/models/users'
+import toastr from 'toastr'
+
+export default {
+    data: () => ({
+        data: {},
+        newUser: null
+    }),
+    methods: {
+        async submit() {
+            try {
+                const m = await Register(this.data);
+                this.newUser = m;
+                toastr.success("You've registered successfully!");
+            } catch (error) {
+                Globals.errors.push(error);
+                toastr.error(error.msg);
+            }
+        }
+    }
+};
 </script>
 
 <style>
 </style>
+
