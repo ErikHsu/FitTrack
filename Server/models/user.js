@@ -42,13 +42,14 @@ const model = {
 
     //Login (uses bcrypt to compare entered vs saved password hash)
     async login(userName, password) {
-        const data = await conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)
+        const data = await conn.query("SELECT * FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)
         if(data.length == 0) {
             throw Error("User not found");
         }
-        const x = await bcrypt.compare(password, data[0].Password);
+        const x = await bcrypt.compare(password, data[0].password);
         if(x){
             const user = { ...data[0], password: null};
+            return { user, token: jwt.sign(user, JWT_SECRET) };
         } else {
             throw Error('Wrong Password');
         }
@@ -72,7 +73,7 @@ const model = {
     async editPassword(userName, oldPassword, newPassword) {
         const data = await conn.query("SELECT 1 FROM Fit_Users WHERE userName = ?, ORDER BY userName LIMIT 1", userName)
         if(data.length == 0) {
-            cb(Error("User not found"));
+            throw Error("User not found");
         }
         //check oldPassword for match
         if(data[0].password == "" || await bcrypt.compare(oldPassword, data[0].password)) {

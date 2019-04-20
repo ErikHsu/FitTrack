@@ -17,23 +17,25 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <router-link class="nav-link" to="/" active-class="active" exact>
+                    <router-link class="nav-link" to="/" active-class="active">
                         Home
                         <span class="sr-only">(current)</span>
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="Workouts" active-class="active">Workouts</router-link>
+                    <router-link class="nav-link" to="Login" active-class="active">Login</router-link>
                 </li>
-
+                <li class="nav-item">
+                    <router-link class="nav-link" to="Register" active-class="active">Registration</router-link>
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <img src="../assets/userIcon.png" height="40">
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="#">Page 1-1</a>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="Register" active-class="active">Registration</router-link>
                         </li>
                         <li>
                             <a href="#">Page 1-2</a>
