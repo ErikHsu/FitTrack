@@ -2,7 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Register from './views/Register.vue'
-import Login from './views/Login.vue';
+import Login from './views/Login.vue'
+import EditProfile from './views/EditProfile.vue'
+
+
 import { Globals } from '@/models/api';
 
 Vue.use(Router)
@@ -35,16 +38,22 @@ const router = new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        //Edit Profile
+        {
+            path:'/editProfile',
+            name: 'editProfile',
+            component: EditProfile
         }
     ]
 })
 
 router.beforeEach((to, from, next)=>{
     console.log({ to, from });
-    const publicRoutes = ['home', 'login', 'register'];
+    const publicRoutes = ['home', 'login', 'register', 'editProfile'];
     if(!publicRoutes.includes( to.name ) && !Globals.user){
         Globals.redirectRoute = { name: to.name, path: to.path, params: to.params, query: to.query, hash: to.hash  }
-        return next('login');
+        return next('home');
     }
     next();
 })

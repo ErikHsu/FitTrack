@@ -23,7 +23,7 @@ app.post("/", (req, res, next) => {
 });
 //edit person via username
 app.post("/edit", (req, res, next) => {
-    people.add(req.body.firstName, lastName, address, userName)
+    people.add(req.body.firstName, lastName, birthday, userName)
     .then(x => res.send(x))
     .catch(next)
 });
