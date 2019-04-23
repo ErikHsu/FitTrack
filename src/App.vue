@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Nav from "@/components/Nav";
-import { Globals } from "@/models/api";
+import Nav from '@/components/Nav';
+import { Globals } from '@/models/api';
 export default {
     data: () => ({
         Globals: Globals

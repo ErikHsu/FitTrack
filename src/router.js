@@ -4,7 +4,7 @@ import Home from './views/Home.vue'
 import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import EditProfile from './views/EditProfile.vue'
-
+import Profile from './views/Profile.vue'
 
 import { Globals } from '@/models/api';
 
@@ -44,13 +44,19 @@ const router = new Router({
             path:'/editProfile',
             name: 'editProfile',
             component: EditProfile
+        },
+        //Profile
+        {
+            path:'/profile',
+            name: 'profile',
+            component: Profile
         }
     ]
 })
 
 router.beforeEach((to, from, next)=>{
     console.log({ to, from });
-    const publicRoutes = ['home', 'login', 'register', 'editProfile'];
+    const publicRoutes = ['home', 'login', 'register', 'editProfile', 'profile'];
     if(!publicRoutes.includes( to.name ) && !Globals.user){
         Globals.redirectRoute = { name: to.name, path: to.path, params: to.params, query: to.query, hash: to.hash  }
         return next('home');

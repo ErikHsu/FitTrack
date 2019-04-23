@@ -15,6 +15,12 @@ app.get("/:id", (req, res, next) => {
     .then(x => res.send(x))
     .catch(next)
 });
+//get person via userName
+app.get("/profile", (req, res, next) => {
+    people.getPerson(req.params.userName)
+    .then(x => res.send(x))
+    .catch(next)
+});
 //add new person
 app.post("/", (req, res, next) => {
     people.add(req.body)

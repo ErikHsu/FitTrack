@@ -97,11 +97,14 @@ export default {
         newUser: null
     }),
     methods: {
-        async submit() {}
+        async submit() {
+        }
+    },
+    async mounted() {
+        this.userCheck();
     }
 };
 </script>
 
 <style>
 </style>
-

@@ -14,6 +14,15 @@ const model = {
         }
         return await data[0];
     },
+
+    //Get person by username
+    async getPerson(userName) {
+        const data = conn.query("SELECT * FROM Fit_Peoples WHERE userName=?", userName);
+        if(!data) {
+            throw Error("Person not found");
+        }
+        return data;
+    },
      
     //Add person
     //TODO: Data validation, check if already exists and abnormal values
