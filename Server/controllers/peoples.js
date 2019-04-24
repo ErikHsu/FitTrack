@@ -11,15 +11,15 @@ app.get("/", (req, res, next) => {
 });
 //get person via id
 app.get("/:id", (req, res, next) => {
-    people.get(id)
+    people.get(req.params.id)
     .then(x => res.send(x))
     .catch(next)
 });
 //get person via userName
-app.get("/profile", (req, res, next) => {
+app.post("/getProfile", (req, res, next) => {
     people.getPerson(req.params.userName)
-    .then(x => res.send(x))
-    .catch(next)
+        .then(x => res.send(x))
+        .catch(next)
 });
 //add new person
 app.post("/", (req, res, next) => {

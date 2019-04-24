@@ -17,11 +17,11 @@ const model = {
 
     //Get person by username
     async getPerson(userName) {
-        const data = conn.query("SELECT * FROM Fit_Peoples WHERE userName=?", userName);
+        const data = await conn.query("SELECT * FROM Fit_Peoples WHERE userName=?", userName);
         if(!data) {
             throw Error("Person not found");
         }
-        return data;
+        return await data;
     },
      
     //Add person

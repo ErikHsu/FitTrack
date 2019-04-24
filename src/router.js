@@ -54,14 +54,14 @@ const router = new Router({
     ]
 })
 
-router.beforeEach((to, from, next)=>{
+/*router.beforeEach((to, from, next)=>{
     console.log({ to, from });
-    const publicRoutes = ['home', 'login', 'register', 'editProfile', 'profile'];
+    const publicRoutes = ['home', 'login', 'register', 'profile'];
     if(!publicRoutes.includes( to.name ) && !Globals.user){
         Globals.redirectRoute = { name: to.name, path: to.path, params: to.params, query: to.query, hash: to.hash  }
         return next('home');
     }
     next();
-})
+})*/
 
 export default router;
