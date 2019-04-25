@@ -16,7 +16,7 @@ app.get("/:id", (req, res,next) => {
     .catch(next)
 });
 //add exercise type
-app.post("/", (req, res, next) => {
+app.post("/addType", (req, res, next) => {
     exercise_type.add(req.body.exerciseType, req.body.bodyFocus)
     .then(x => res.send(x))
     .catch(next)

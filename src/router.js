@@ -5,6 +5,7 @@ import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import EditProfile from './views/EditProfile.vue'
 import Profile from './views/Profile.vue'
+import AddExercise from './views/AddExercise.vue'
 
 import { Globals } from '@/models/api';
 
@@ -50,6 +51,11 @@ const router = new Router({
             path:'/profile',
             name: 'profile',
             component: Profile
+        },
+        {
+            path:'/addExercise',
+            name: 'addExercise',
+            component: AddExercise
         }
     ]
 })

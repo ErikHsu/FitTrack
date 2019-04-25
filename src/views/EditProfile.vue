@@ -43,7 +43,7 @@
                                 name="weight"
                                 id="weight"
                                 aria-describedby="helpWeight"
-                                placeholder="Weight"
+                                placeholder="Weight (lbs)"
                             >
                         </div>
                         <!-- Height -->
