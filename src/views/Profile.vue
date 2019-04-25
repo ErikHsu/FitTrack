@@ -4,7 +4,7 @@
             <h2 class="card-title">{{Globals.user.userName}}'s Profile</h2>
             <div class="card-text">
                 <div class="card-body">
-                    First Name: {{profiles.fname}}
+                    First Name: {{profiles.fName}}
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@ export default {
         profiles: []
     }),
     async mounted() {
-        let data = Globals.user.userName;
+        let data = Globals.user;
         this.profiles = await getProfile(data);
     }
 };

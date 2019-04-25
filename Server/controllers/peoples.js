@@ -17,7 +17,7 @@ app.get("/:id", (req, res, next) => {
 });
 //get person via userName
 app.post("/getProfile", (req, res, next) => {
-    people.getPerson(req.params.userName)
+    people.getPerson(req.body)
         .then(x => res.send(x))
         .catch(next)
 });
