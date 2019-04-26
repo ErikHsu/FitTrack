@@ -13,7 +13,9 @@
                 </button>
                 <strong>{{e.msg}}</strong>
             </div>
+            <transition name="moveInUp">
             <router-view/>
+            </transition>
         </div>
     </div>
 </template>
@@ -33,4 +35,21 @@ export default {
 </script>
 
 <style lang="scss">
+.moveInUp-enter-active{
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
 </style>

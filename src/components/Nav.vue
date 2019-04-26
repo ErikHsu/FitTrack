@@ -71,4 +71,7 @@ export default {
 </script>
 
 <style>
+.navbar{
+    opacity: 0.9;
+}
 </style>
