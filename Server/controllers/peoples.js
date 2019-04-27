@@ -22,7 +22,7 @@ app.post("/getProfile", (req, res, next) => {
         .catch(next)
 });
 //add new person
-app.post("/", (req, res, next) => {
+app.post("/add", (req, res, next) => {
     people.add(req.body)
     .then(x => res.send(x))
     .catch(next)

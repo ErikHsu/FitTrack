@@ -17,7 +17,7 @@ app.get("/:id", (req, res,next) => {
 });
 //add exercise type
 app.post("/addType", (req, res, next) => {
-    exercise_type.add(req.body.exerciseType, req.body.bodyFocus)
+    exercise_type.add(req.body)
     .then(x => res.send(x))
     .catch(next)
 });

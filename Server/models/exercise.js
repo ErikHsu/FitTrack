@@ -16,7 +16,7 @@ const model = {
     },
 
     //Add exercise
-    async add(input) {
+    async addExercise(input) {
         const data = await conn.query("INSERT INTO Fit_Exercises (exerciseName, created_at) VALUES (?)",
         [[input.exerciseName, new Date()]]);
            return await model.get(data.insertId);

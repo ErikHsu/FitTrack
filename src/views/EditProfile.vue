@@ -1,3 +1,5 @@
+<!-- Combination page for Peoples and Body_History, updates both tables at once upon submit -->
+
 <template>
   <div class="card bg-light">
     <div class="card-body">
@@ -20,6 +22,7 @@
                 required
               >
             </div>
+            <!-- Last Name -->
             <div class="form-group col-md-6">
               <label for="lName">Last Name</label>
               <input
@@ -34,6 +37,7 @@
               >
             </div>
           </div>
+          <!-- Birthday -->
           <div class="form-row">
             <div class="form-group col-md-2">
               <label for="Birthday">Birthday</label>
@@ -86,6 +90,7 @@
                 <option>Other</option>
               </select>
             </div>
+          <!-- UserName -->
             <div class="form-group-col-nd-2 col">
               <label for="userName">User Name</label>
               <input
