@@ -52,6 +52,7 @@ const router = new Router({
             name: 'profile',
             component: Profile
         },
+        //Add Exercise
         {
             path:'/addExercise',
             name: 'addExercise',

@@ -28,8 +28,8 @@ app.post("/", (req, res, next) => {
     .catch(next)
 });
 //edit person via username
-app.post("/edit", (req, res, next) => {
-    people.add(req.body.firstName, lastName, birthday, userName)
+app.post("/editPerson", (req, res, next) => {
+    people.editPerson(req.body)
     .then(x => res.send(x))
     .catch(next)
 });

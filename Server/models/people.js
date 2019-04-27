@@ -27,22 +27,18 @@ const model = {
     //Add person
     //TODO: Data validation, check if already exists and abnormal values
     async add(input) {
-        const data = await conn.query("INSERT INTO Fit_Peoples (fName, lName, created_at, userName) VALUES (?)",
-        [input.fName, input.lName, new Date(), input.userName],
+        const data = await conn.query("INSERT INTO Fit_Peoples (fName, lName, created_at, birthday, userName) VALUES (?)",
+        [input.fName, input.lName, new Date(), input.birthday, input.userName],
         );
         return await model.get(data.insertId);
     },
 
     //Edit person
-    async editPerson(firstName, lastName, userName) {
-        const data = conn.query("SELECT 1 FROM Fit_Peoples WHERE userName = ? ORDER BY userName LIMIT 1", userName);
-        if(data.length == 0) {
-            throw Error("Person not found");
-        } else {
-            await conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ? WHERE userName = ?", 
-                [firstName, lastName, userName]);
+    async editPerson(input) {
+            await conn.query("UPDATE Fit_Peoples SET fName = ?, lName = ?, birthday = ? WHERE userName = ?", 
+                [input.fName, input.lName, input.birthday, input.userName]);
             return { status: "Success", msg: "Personal Info Successfully Changed" };
-        }
+        
     },
 };
 

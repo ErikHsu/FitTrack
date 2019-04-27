@@ -32,6 +32,9 @@
                     <router-link class="nav-link" to="Profile" active-class="active">Profile</router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link class="nav-link" to="EditProfile" active-class="active">Edit Profile</router-link>
+                </li>
+                <li class="nav-item">
                     <router-link class="nav-link" to="AddExercise" active-class="active">Add Exercise</router-link>
                 </li>
                 <li class="dropdown">

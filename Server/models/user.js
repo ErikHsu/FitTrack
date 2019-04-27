@@ -17,7 +17,7 @@ const model = {
         if(!data){
             throw Error("User not found");
         }
-        return await data[0];
+        return data;
     },
 
     //Add new user (uses bcrypt to hash user passwords)
@@ -54,6 +54,7 @@ const model = {
             throw Error('Wrong Password');
         }
     },
+
     //Edit UserName
     async editUserName(userName, password, newUserName) {
         const data = conn.query("SELECT 1 FROM Fit_Users WHERE userName = ? ORDER BY userName LIMIT 1", userName)

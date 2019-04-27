@@ -27,6 +27,7 @@ app.post("/login", (req, res, next) => {
     .then(x => res.send(x))
     .catch(next)
 });
+
 //edit username
 app.post("/editUserName", (req, res, next) => {
     user.editUserName(req.body.userName, req.body.password, req.body.newUserName)

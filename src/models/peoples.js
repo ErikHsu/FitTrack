@@ -5,3 +5,8 @@ export async function getProfile(data) {
     return x;
 }
 
+export async function editProfile(data) {
+    const x = await api("peoples/editPerson", data)
+    return x;     
+}
+

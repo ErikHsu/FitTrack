@@ -1,0 +1,35 @@
+@import 'bootstrap/scss/bootstrap.scss';
+@import 'toastr/toastr.scss';
+
+#main {
+  margin-top: 75px;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Numans");
+
+.container {
+  background-image: url("http://getwallpapers.com/wallpaper/full/a/c/c/804742-free-climbing-wallpapers-2560x1600-picture.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Numans", sans-serif;
+}
+
+.card-body {
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.6); /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+
+  height: 400px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 550px;
+}
+
+.text-muted {
+  color: white;
+}

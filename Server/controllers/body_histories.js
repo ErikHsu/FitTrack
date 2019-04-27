@@ -22,8 +22,8 @@ app.post("/", (req, res, next) => {
     .catch(next)
 });
 //edit body history of user
-app.post("/edit", (req, res, next) => {
-    body_history.editBodyHistory(req.body.userName, req.body.weight, req.body.height, req.body.gender)
+app.post("/editBody", (req, res, next) => {
+    body_history.editBodyHistory(req.body)
     .then(x => res.send(x))
     .catch(next)
 });

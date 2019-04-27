@@ -3,6 +3,7 @@ const path = require('path');
 //Controllers
 const users = require('./controllers/users');
 const peoples = require('./controllers/peoples');
+const body_histories = require('./controllers/body_histories')
 //Models
 const userModel = require('./models/user');
 
@@ -35,6 +36,7 @@ app.use(function (req, res, next) {
     app.get('/', (req, res) => res.send('Hello World!'));
     app.use('/users', users);
     app.use('/peoples', peoples);
+    app.use('/body_histories', body_histories);
 
     app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../dist/index.html")))
 

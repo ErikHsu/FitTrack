@@ -1,4 +1,5 @@
 <template>
+<div class="card">
   <div class="card-body">
     <h2 class="card-title">Register</h2>
     <div class="card-text">
@@ -34,6 +35,7 @@
       </form>
     </div>
   </div>
+</div>
 </template>
 
 <script>
