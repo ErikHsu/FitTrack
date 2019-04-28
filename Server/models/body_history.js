@@ -28,6 +28,14 @@ const model = {
         await conn.query("UPDATE Fit_Body_History SET weight = ?, height = ?, gender = ? WHERE userName = ?",
             [input.weight, input.height, input.gender, input.userName]);
         return { status: "success", msg: "History Successfully Changed" };
+    },
+    //Get history by userName
+    async getHistory(input) {
+        const data = await conn.query("SELECT * FROM Fit_Body_History WHERE userName=?", input.userName)
+        if(!data) {
+            throw Error("History not found");
+        }
+        return data;
     }
 }
 

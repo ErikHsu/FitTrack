@@ -6,6 +6,7 @@ const peoples = require('./controllers/peoples');
 const body_histories = require('./controllers/body_histories')
 const exercises = require('./controllers/exercises');
 const exercise_types = require('./controllers/exercise_types');
+const workoutPlans = require('./controllers/workoutPlans');
 
 //Models
 const userModel = require('./models/user');
@@ -41,7 +42,8 @@ app.use(function (req, res, next) {
     app.use('/peoples', peoples);
     app.use('/body_histories', body_histories);
     app.use('/exercises', exercises);
-    app.use('/exercise_types', exercise_types); 
+    app.use('/exercise_types', exercise_types);
+    app.use('/workoutPlans', workoutPlans);
     
     app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../dist/index.html")))
 

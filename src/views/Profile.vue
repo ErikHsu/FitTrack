@@ -24,6 +24,46 @@
               >{{profiles.lName}}</div>
             </div>
           </div>
+          <div class="row">
+            <div class="col col-lg-2">Birthday:</div>
+            <div class="col-md-auto">
+              <div
+                class="card-text"
+                v-for="profiles in profiles"
+                :key="profiles.id"
+              >{{profiles.birthday}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-lg-2">Weight:</div>
+            <div class="col-md-auto">
+              <div
+                class="card-text"
+                v-for="bodyHist in bodyHist"
+                :key="bodyHist.id"
+              >{{bodyHist.weight}} lbs.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-lg-2">Height:</div>
+            <div class="col-md-auto">
+              <div
+                class="card-text"
+                v-for="bodyHist in bodyHist"
+                :key="bodyHist.id"
+              >{{bodyHist.height}} in</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-lg-2">Gender:</div>
+            <div class="col-md-auto">
+              <div
+                class="card-text"
+                v-for="bodyHist in bodyHist"
+                :key="bodyHist.id"
+              >{{bodyHist.gender}}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -33,16 +73,19 @@
 <script>
 import { Globals } from "@/models/api";
 import { getProfile } from "@/models/peoples";
+import { getBodyHistory } from "@/models/body_histories";
 import toastr from "toastr";
 
 export default {
   data: () => ({
     Globals: Globals,
-    profiles: {}
+    profiles: {},
+    bodyHist: {}
   }),
   async mounted() {
     let data = Globals.user.userName;
     this.profiles = await getProfile({ userName: data });
+    this.bodyHist = await getBodyHistory({ userName: data });
   }
 };
 </script>

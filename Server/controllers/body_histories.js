@@ -27,6 +27,12 @@ app.post("/editBody", (req, res, next) => {
     .then(x => res.send(x))
     .catch(next)
 });
+//get history via userName
+app.post("/getHistory", (req, res, next) => {
+    body_history.getHistory(req.body)
+    .then(x => res.send(x))
+    .catch(next)
+})
 
 module.exports = app;
 
