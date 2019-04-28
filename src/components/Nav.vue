@@ -37,6 +37,9 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="AddExercise" active-class="active">Add Exercise</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="AddPlan" active-class="active">Add Plan   </router-link>
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <img src="../assets/userIcon.png" height="40">

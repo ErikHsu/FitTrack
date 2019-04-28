@@ -16,7 +16,7 @@ app.get("/:id", (req, res, next) => {
     .catch(next)
 });
 //add workout plan
-app.post("/", (req, res, next) => {
+app.post("/add", (req, res, next) => {
     plan.add(req.body)
     .then(x => res.send(x))
     .catch(next)
@@ -27,6 +27,13 @@ app.post("/edit", (req, res, next) => {
     .then(x => res.send(x))
     .catch(next)
 });
+//Link plan to user
+app.post("/linkToUser", (req, res, next) => {
+    plan.linkToUser(req.body)
+    .then(x => res.send(x))
+    .catch(next)
+});
+
 
 module.exports = app;
 

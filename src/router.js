@@ -6,6 +6,7 @@ import Login from './views/Login.vue'
 import EditProfile from './views/EditProfile.vue'
 import Profile from './views/Profile.vue'
 import AddExercise from './views/AddExercise.vue'
+import AddPlan from './views/AddPlan.vue'
 
 import { Globals } from '@/models/api';
 
@@ -57,6 +58,12 @@ const router = new Router({
             path:'/addExercise',
             name: 'addExercise',
             component: AddExercise
+        },
+        //Add Plan
+        {
+            path:'/addPlan',
+            name: 'addPlan',
+            component: AddPlan
         }
     ]
 })

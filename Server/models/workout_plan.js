@@ -16,7 +16,6 @@ const model = {
     },
     
     //Add workout plan
-    //TODO: Data validation: check if already exists and abnormal values
     async add(input) {
         const data = conn.query("INSERT INTO Fit_Workout_Plans (planName, created_at) VALUES (?)",
             [input.planName, new Date()],
@@ -33,6 +32,15 @@ const model = {
             await conn.query("UPDATE Fit_Workout_Plans SET planName = ? WHERE planName = ?", [newWorkoutPlan, oldWorkoutPlan]);
             return { status: "success", msg: "Workout Plan Successfully Changed" };
     },
+
+    //Link plan to user
+    async linkToUser(input)
+    {
+       await conn.query("INSERT INTO Fit_Users_Plans (userName, planName) VALUES (?)",
+            [input.Global.user.userName, newPlan.planName],
+        )
+        return { status: "success", msg: "Workout Plan Linked to User"}
+    }
 };
 
 module.exports = model;
