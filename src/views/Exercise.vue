@@ -7,18 +7,15 @@
         <thead>
           <tr></tr>
           <tr>
-            <th scope="col">Exercise Name</th>
-            <th scope="col">Exercise Type</th>
-            <th scope="col">Body Focus</th>
+            <th>Exercise Name</th>
+            <th>Exercise Type</th>
+            <th>Body Focus</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="exercise in exercises" :key="exercise.id">
-            <th scope="row">{{exercises.exerciseName}}</th>
-          </tr>
-          <tr v-for="exercisetypes in exercisetypes" :key="exercisetypes.id">
-            <th scope="row">{{exercisetypes.exerciseType}}</th>
-            <th scope="row">{{exercisetypes.bodyFocus}}</th>
+          <tr v-for="exercises in exercises" :key="exercises.id">
+            <th scope="col">{{exercises.exerciseName}}</th>
+            <th scope="col">{{exercisetypes.exercisetype}}</th>
           </tr>
         </tbody>
       </table>
@@ -35,8 +32,8 @@ import toastr from "toastr";
 export default {
   data: () => ({
     Globals: Globals,
-    exercises: {},
-    exercisetypes: {}
+    exercises: [],
+    exercisetypes: []
   }),
   async mounted() {
     this.exercises = await getExercises();
