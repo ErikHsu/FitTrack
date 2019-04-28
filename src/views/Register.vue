@@ -1,5 +1,4 @@
 <template>
-<div class="card">
   <div class="card-body">
     <h2 class="card-title">Register</h2>
     <div class="card-text">
@@ -16,12 +15,12 @@
             aria-describedby="helpUserName"
             placeholder="username"
           >
-          <small id="helpUserName" class="form-text text-muted">Please enter your username here</small>
+          <small id="helpUserName" class="form-text.text-muted">Please enter your username here</small>
         </div>
         <div class="form-group">
           <label for="Password">Password</label>
           <input
-            type="text"
+            type="password"
             class="form-control"
             v-model="data.password"
             name="password"
@@ -29,13 +28,12 @@
             aria-describedby="helpPassword"
             placeholder="password"
           >
-          <small id="helpPassword" class="form-text text-muted">Please enter your password here</small>
+          <small id="helpPassword" class="form-text.text-muted">Please enter your password here</small>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -64,5 +62,8 @@ export default {
 </script>
 
 <style>
+.text-muted {
+  color: white;
+}
 </style>
 

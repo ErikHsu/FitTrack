@@ -15,12 +15,13 @@
               aria-describedby="helpUserName"
               placeholder="username"
             >
+            <small id="helpUserName" class="form-text.text-muted">Please enter your username here</small>
               
           </div>
           <div class="form-group">
             <label for="Password">Password</label>
             <input
-              type="text"
+              type="password"
               class="form-control"
               v-model="data.password"
               name="password"
@@ -65,7 +66,36 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-   @import 'login.scss'
+<style>
+@import url("https://fonts.googleapis.com/css?family=Numans");
+
+html,
+body {
+  background-image: url("http://getwallpapers.com/wallpaper/full/a/c/c/804742-free-climbing-wallpapers-2560x1600-picture.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Numans", sans-serif;
+}
+
+.card-body {
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.6); /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+
+
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 900px;
+}
+
+.text-muted {
+  color: white;
+}
+
 </style>
 

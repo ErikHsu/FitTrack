@@ -4,7 +4,7 @@ const exercise_type = require('../models/exercise_type');
 const app = express.Router();
 
 //get all
-app.get("/", (req, res, next) => {
+app.get("/getTypes", (req, res, next) => {
     exercise_type.getAll()
     .then(x => res.send(x))
     .catch(next)

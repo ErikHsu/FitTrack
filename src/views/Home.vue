@@ -1,23 +1,12 @@
 <template>
-    <div class="topnav">
-
+  <div class="card-body">
+    <h1 class="card-title">FitByte</h1>
+    <p>Welcome to the new you!</p>
+      <hr class="my-4">
+      <a class="btn btn-primary btn-lg" href="Register" role="button">Eager to get started?</a>
     </div>
+  </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import Register from '@/views/Register.vue'
-
-export default {
-  name: 'home',
-  components: {
-    Register
-  }
-}
 </script>
-
-
-<!--        <a class="active" href="#home">Home</a>
-        <a href="#login">Login</a>
-        <a href="#register">Register</a> -->

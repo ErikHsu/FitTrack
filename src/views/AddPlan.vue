@@ -1,5 +1,4 @@
 <template>
-  <div class="card bg-light">
     <div class="card-body">
       <h2 class="card-title">Plans</h2>
       <div class="card-text">
@@ -17,7 +16,7 @@
               aria-describedby="helpplanname"
               placeholder="Plan Name"
             >
-            <small id="helpplanname" class="form-text text-muted">Please enter the plan name here</small>
+            <small id="helpplanname" class="form-text.text-muted">Please enter the plan name here</small>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
           <router-link :to="{name: 'assignExercise'}">
@@ -25,7 +24,6 @@
           </router-link>
         </form>
       </div>
-    </div>
   </div>
 </template>
 

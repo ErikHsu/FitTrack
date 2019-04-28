@@ -1,9 +1,7 @@
 <template>
-  <div class="card bg-light">
     <div class="card-body">
       <h2 class="card-title">{{Globals.user.userName}}'s Profile</h2>
       <div class="card-text">
-        <div class="card-body">
           <div class="row">
             <div class="col col-lg-2">First Name:</div>
             <div class="col-md-auto">
@@ -66,8 +64,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>

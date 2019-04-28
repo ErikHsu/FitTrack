@@ -1,5 +1,4 @@
 <template>
-  <div class="card bg-light">
     <div class="card-body">
       <h2 class="card-title">Exercises</h2>
       <div class="card-text">
@@ -19,7 +18,7 @@
             >
             <small
               id="helpexercisename"
-              class="form-text text-muted"
+              class="form-text.text-muted"
             >Please enter the exercise name here</small>
           </div>
           <!--ExerciseType Select-->
@@ -34,7 +33,7 @@
             </select>
             <small
               id="helpexercisename"
-              class="form-text text-muted"
+              class="form-text.text-muted"
             >Please select the type of exercise it is</small>
           </div>
           <!--Body Focus Select-->
@@ -50,14 +49,13 @@
             </select>
             <small
               id="helpexercisename"
-              class="form-text text-muted"
+              class="form-text.text-muted"
             >Please select the area of focus for this exercise</small>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

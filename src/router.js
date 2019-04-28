@@ -7,6 +7,7 @@ import EditProfile from './views/EditProfile.vue'
 import Profile from './views/Profile.vue'
 import AddExercise from './views/AddExercise.vue'
 import AddPlan from './views/AddPlan.vue'
+import Exercise from './views/Exercise.vue'
 
 import { Globals } from '@/models/api';
 
@@ -52,6 +53,12 @@ const router = new Router({
             path:'/profile',
             name: 'profile',
             component: Profile
+        },
+        //Exercises
+        {
+            path:'/exercises',
+            name: 'exercises',
+            component: Exercise
         },
         //Add Exercise
         {

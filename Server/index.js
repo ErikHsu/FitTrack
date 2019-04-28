@@ -35,21 +35,23 @@ app.use(function (req, res, next) {
         }
     })*/
 
-    app.use(express.urlencoded({ extended: false }));
-    app.use(express.json());
-    app.get('/', (req, res) => res.send('Hello World!'));
-    app.use('/users', users);
-    app.use('/peoples', peoples);
-    app.use('/body_histories', body_histories);
-    app.use('/exercises', exercises);
-    app.use('/exercise_types', exercise_types);
-    app.use('/workoutPlans', workoutPlans);
-    
-    app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../dist/index.html")))
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.get('/', (req, res) => res.send('Hello World!'));
+app.use('/users', users);
+app.use('/peoples', peoples);
+app.use('/body_histories', body_histories);
+app.use('/exercises', exercises);
+app.use('/exercise_types', exercise_types);
+app.use('/workoutPlans', workoutPlans);
+app.get('/exercises', exercises);
+app.get('/exercise_types', exercise_types);
 
-    app.use(function (err, req, res, next) {
-        console.error(err.stack)
-        res.status(500).send({ msg: err.message })
-    })
+app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../dist/index.html")))
 
-    app.listen(port, () => console.log(`Example app http://localhost:${port}!`))
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send({ msg: err.message })
+})
+
+app.listen(port, () => console.log(`Example app http://localhost:${port}!`))

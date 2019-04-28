@@ -4,7 +4,7 @@ const exercise = require('../models/exercise');
 const app = express.Router();
 
 //get all 
-app.get("/", (req, res, next) => {
+app.get("/getExercises", (req, res, next) => {
     exercise.getAll()
     .then(x => res.send(x))
     .catch(next)

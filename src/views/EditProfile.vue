@@ -1,7 +1,6 @@
 <!-- Combination page for Peoples and Body_History, updates both tables at once upon submit -->
 
 <template>
-  <div class="card bg-light">
     <div class="card-body">
       <h2 class="card-title">Edit Profile</h2>
       <div class="card-text">
@@ -84,7 +83,6 @@
             <div class="form-group col-md-2">
               <label for="Gender">Gender</label>
               <select class="custom-select" v-model="data.gender" required>
-                <option hidden>Choose your gender</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Other</option>
@@ -113,7 +111,6 @@
         </form>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
