@@ -7,6 +7,7 @@ const body_histories = require('./controllers/body_histories')
 const exercises = require('./controllers/exercises');
 const exercise_types = require('./controllers/exercise_types');
 const workoutPlans = require('./controllers/workoutPlans');
+const foods = require('./controllers/foods');
 
 //Models
 const userModel = require('./models/user');
@@ -46,6 +47,7 @@ app.use('/exercise_types', exercise_types);
 app.use('/workoutPlans', workoutPlans);
 app.get('/exercises', exercises);
 app.get('/exercise_types', exercise_types);
+app.use('/foods', foods);
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../dist/index.html")))
 

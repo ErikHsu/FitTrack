@@ -3,9 +3,8 @@
     <h2 class="card-title">Exercises</h2>
     <div class="card-text">Currently available exercises</div>
     <div>
-      <table class="table table-light">
-        <thead>
-          <tr></tr>
+      <table class="table table-light table-hover">
+        <thead class="thead-light">
           <tr>
             <th>Exercise Name</th>
             <th>Exercise Type</th>
@@ -15,7 +14,7 @@
         <tbody>
           <tr v-for="exercises in exercises" :key="exercises.id">
             <th scope="col">{{exercises.exerciseName}}</th>
-            <th scope="col">{{exercisetypes.exercisetype}}</th>
+            <th scope="col">{{exercisetypes.exerciseType}}</th>
           </tr>
         </tbody>
       </table>
@@ -37,7 +36,7 @@ export default {
   }),
   async mounted() {
     this.exercises = await getExercises();
-    this.exerciseTypes = await getExerciseTypes();
+    this.exercisetypes = await getExerciseTypes();
   }
 };
 </script>
