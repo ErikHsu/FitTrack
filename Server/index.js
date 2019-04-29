@@ -49,6 +49,7 @@ app.get('/exercises', exercises);
 app.get('/exercise_types', exercise_types);
 app.use('/foods', foods);
 
+
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../dist/index.html")))
 
 app.use(function (err, req, res, next) {

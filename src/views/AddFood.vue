@@ -59,7 +59,7 @@
               >
             </div>
             <!-- Fat -->
-            <div class="form-group-col-nd-2 col">
+            <div class="form-group col-md-2">
               <label for="Fat">Fat</label>
               <input
                 type="text"
@@ -84,7 +84,24 @@ import { Globals } from "@/models/api";
 import { addFood } from "@/models/food";
 import toastr from "toastr";
 
-export default {};
+export default {
+  data: () => ({
+    data: {},
+    newFood: null
+  }),
+  methods: {
+    async submit() {
+      try {
+        const m = await addFood(data);
+        this.newFood = m;
+        toastr.success("Food Added");
+      } catch (error) {
+        Globals.errors.push(error);
+        toastr.error(error.msg);
+      }
+    }
+  }
+};
 </script>
 
 <style>

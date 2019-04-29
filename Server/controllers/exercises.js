@@ -27,6 +27,12 @@ app.post("/edit", (req, res, next) => {
     .then(x => res.send(x))
     .catch(next)
 });
+//Exercise and type join
+app.get("/getAllInfo", (req, res, next) => {
+    exercise.getAllInfo()
+    .then(x => res.send(x))
+    .catch(next)
+});
 
 module.exports = app;
 

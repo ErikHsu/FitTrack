@@ -2,7 +2,7 @@ const conn = require("./mysql_connection");
 
 const model = {
     //Get all foods
-    async getAll(cb) {
+    async getAll() {
         return await conn.query("SELECT * FROM Fit_Foods");
     },
 
@@ -18,7 +18,7 @@ const model = {
     //Add food
     async add(input) {
         if(input.calories < 10000 && input.carbohydrates < 100 && input.protein < 100 && input.fat < 100) {
-            const data = conn.query("INSERT INTO Fit_Foods (foodName, created_at, calories, carbohydrates, protein, fat) VALUES (?)",
+            const data = await conn.query("INSERT INTO Fit_Foods (foodName, created_at, calories, carbohydrates, protein, fat) VALUES (?)",
                 [input.foodName, new Date(), input.calories, input.carbohydrates, input.protein, input.fat]);
             return await model.get(data.insertId)
         } else {

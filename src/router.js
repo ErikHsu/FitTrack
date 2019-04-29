@@ -9,6 +9,7 @@ import AddExercise from './views/AddExercise.vue'
 import AddPlan from './views/AddPlan.vue'
 import Exercise from './views/Exercise.vue'
 import AddFood from './views/AddFood.vue'
+import Food from './views/Food.vue'
 
 import { Globals } from '@/models/api';
 
@@ -72,6 +73,12 @@ const router = new Router({
             path:'/addPlan',
             name: 'addPlan',
             component: AddPlan
+        },
+        //Foods
+        {
+            path:'/food',
+            name:'food',
+            component: Food
         },
         //Add Food
         {

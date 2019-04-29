@@ -41,6 +41,9 @@
           <router-link class="nav-link" to="AddPlan" active-class="active">Add Plan</router-link>
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" to="Food" active-class="active">Foods</router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" to="AddFood" active-class="active">Add Food</router-link>
         </li>
       </ul>

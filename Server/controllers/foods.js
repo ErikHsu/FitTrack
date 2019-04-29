@@ -4,7 +4,7 @@ const food = require('../models/food');
 const app = express.Router();
 
 //get all
-app.get("/", (req, res, next) => {
+app.get("/getFoods", (req, res, next) => {
     food.getAll()
     .then(x => res.send(x))
     .catch(next)    

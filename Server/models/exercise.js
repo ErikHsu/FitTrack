@@ -31,6 +31,12 @@ const model = {
             await conn.query("UPDATE Fit_Exercises SET exerciseName = ? WHERE exerciseName = ?", [oldExerciseName, newExerciseName]);
             return { status: "success", msg: "Exercise Successfully Changed"};
         }
+    },
+
+    //All info (Join)
+    async getAllInfo() {
+        const data = await conn.query("SELECT * FROM Fit_Exercises INNER JOIN Fit_Exercises ON Fit_Exercises.exerciseName = Fit_Exercise_Types.exerciseName");
+        return data;
     }
 }
 
