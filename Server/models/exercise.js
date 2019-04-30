@@ -35,7 +35,7 @@ const model = {
 
     //All info (Join)
     async getAllInfo() {
-        const data = await conn.query("SELECT * FROM Fit_Exercises INNER JOIN Fit_Exercises ON Fit_Exercises.exerciseName = Fit_Exercise_Types.exerciseName");
+        const data = await conn.query("SELECT * FROM Fit_Exercises INNER JOIN Fit_Exercise_Types ON Fit_Exercises.exerciseName = Fit_Exercise_Type.exerciseName");
         return data;
     }
 }

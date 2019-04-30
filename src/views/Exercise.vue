@@ -12,9 +12,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="exercises in exercises" :key="exercises.id">
+          <tr v-for="exercises in exercises" :key="exercises.exerciseName">
             <th scope="col">{{exercises.exerciseName}}</th>
-            <th scope="col">{{exercisetypes.exerciseType}}</th>
+            <th scope="col">{{exercises.exerciseType}}</th>
+            <th scope="col">{{exercises.bodyType}}</th>
           </tr>
         </tbody>
       </table>
@@ -24,19 +25,17 @@
 
 <script>
 import { Globals } from "@/models/api";
+import { getAllExerciseInfo } from "@/models/exercises";
 import { getExercises } from "@/models/exercises";
-import { getExerciseTypes } from "@/models/exerciseTypes";
 import toastr from "toastr";
 
 export default {
   data: () => ({
     Globals: Globals,
-    exercises: [],
-    exercisetypes: []
+    exercises: []
   }),
   async mounted() {
     this.exercises = await getExercises();
-    this.exercisetypes = await getExerciseTypes();
   }
 };
 </script>
