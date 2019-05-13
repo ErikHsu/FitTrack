@@ -9,3 +9,8 @@ export async function getFoods() {
 	const x = await api("foods/getFoods")
 	return x;
 }
+
+export async function searchFood(data) {
+	const x = await api("foods/searchFood", data)
+	return x;
+}

@@ -41,6 +41,24 @@ const model = {
         } else {
             throw Error("Outside reasonable ranges: Please double check your nutritional information");
         }
+    },
+
+    //Search food
+    async search(input) {
+        const data = conn.query('SELECT * FROM Fit_Foods');
+        var searchedFood = [];
+        for(var i = 0; i < data.length; i++)
+        {
+            var foodName = data[i].foodName;
+            for(var j = 0; j < input.length; j++)
+            {
+                if(input.charAt(j) != foodName.charAt(j)) {
+                    break;
+                }
+            }
+            searchedFood.push(foodName)
+        }
+        return searchedFood;
     }
 }
 

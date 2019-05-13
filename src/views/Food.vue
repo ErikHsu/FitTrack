@@ -3,6 +3,9 @@
     <h2 class="card-title">Foods</h2>
     <div class="card-text">Currently available foods</div>
     <div>
+        <vSelect multiple label="foodName" :options="options" @search="searchFoods($event)" placeholder="Enter food name"></vSelect>
+    </div>
+    <div>
       <table class="table table-light table-hover">
         <thead class="thead-light">
           <tr>
@@ -27,18 +30,30 @@
   </div>
 </template>
 
+<script src="https://unpkg.com/vue-select@latest"></script>
+
 <script>
+import vSelect from 'vue-select';
 import { Globals } from "@/models/api";
 import { getFoods } from "@/models/food";
 import toastr from "toastr";
 
 export default {
+  components: {
+    vSelect
+  },
+
   data: () => ({
     Globals: Globals,
-    foods: []
+    foods: [],
+    options:[]
   }),
   async mounted() {
     this.foods = await getFoods();
+  },
+  //Search Food
+  async searchFood(input) {
+    this.options = await food.searchFood(input);
   }
 };
 </script>

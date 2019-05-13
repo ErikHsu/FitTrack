@@ -26,9 +26,16 @@ app.post("/addFood", (req, res, next) => {
 
 //edit food
 app.post("/edit", (req, res, next) => {
-    food.editPlan(req.body.oldFoodName, req.body.newFoodName, req.body.calories, req.body.carbohydrates, req.body.protein, req.body) 
+    food.editFood(req.body.oldFoodName, req.body.newFoodName, req.body.calories, req.body.carbohydrates, req.body.protein, req.body) 
     .then(x => res.send(x))
     .catch(next)    
+});
+
+//search food
+app.post("/searchFood", (req, res, next) => {
+    food.search(req.body.input)
+    .then(x => res.send(x))
+    .catch(next)
 });
 
 module.exports = app;
